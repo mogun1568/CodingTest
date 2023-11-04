@@ -4,13 +4,6 @@
 
 using namespace std;
 
-bool cmp(pair<int, int> a, pair<int, int> b) {
-    if (a.second == b.second) {
-        return a.first < b.first;
-    }
-    return a.second < b.second;
-}
-
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
@@ -21,16 +14,16 @@ int main() {
     vector<pair<int, int>> room;
     for (int i = 0; i < n; i++) {
         cin >> s >> e;
-        room.push_back({s, e});
+        room.push_back({e, s});
     }
 
-    sort(room.begin(), room.end(), cmp);
+    sort(room.begin(), room.end());
 
-    curE = room[0].second;
+    curE = room[0].first;
     for (int i = 1; i < n; i++) {
-        if (room[i].first >= curE) {
+        if (room[i].second >= curE) {
             cnt++;
-            curE = room[i].second;
+            curE = room[i].first;
         }
     }
 
