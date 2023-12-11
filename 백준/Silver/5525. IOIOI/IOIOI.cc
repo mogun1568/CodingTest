@@ -6,18 +6,25 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n, m, s2Len, cnt = 0;
-    string s, s2 = "I";
+    int n, m, k, cnt = 0;
+    string s;
     cin >> n >> m >> s;
 
-    for (int i = 0; i < n; i++) {
-        s2 += "OI";
-    }
-    s2Len = s2.length();
 
-    for (int i = 0; i <= s.length() - s2Len; i++) {
-        if (s2 == s.substr(i, s2Len)) {
-            cnt++;
+    for (int i = 0; i <= s.length(); i++) {
+        if (s[i] == 'O') {
+            continue;
+        }
+
+        k = 0;
+        while (s[i + 1] == 'O' && s[i + 2] == 'I') {
+            k++;
+            if (k == n) {
+                cnt++;
+                k--;
+            }
+
+            i += 2;
         }
     }
 
