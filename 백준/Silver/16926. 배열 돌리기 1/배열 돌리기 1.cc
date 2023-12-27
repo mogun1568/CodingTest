@@ -54,7 +54,7 @@ int main() {
         }
     }
 
-    for (int i = 0; i < r; i++) {
+    while (r--) {
         rotate(min(n, m) / 2);
     }
 
