@@ -1,35 +1,50 @@
 #include <iostream>
-#include <algorithm>
+
 using namespace std;
+
+int dp[16][16];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
-    int n, m, k, a, b, c, result = 1;
+    int n, m, k;
     cin >> n >> m >> k;
 
-    int dir[3][2] = {0, 0, k / m, k % m - 1, n - 1, m - 1};
-    if (k == 0) {
-        dir[1][0] = 0;
-        dir[1][1] = 0;
-    }
-
-    for (int i = 0; i < 2; i++) {
-        a = max(dir[i + 1][0] - dir[i][0], dir[i + 1][1] - dir[i][1]);
-        b = min(dir[i + 1][0] - dir[i][0], dir[i + 1][1] - dir[i][1]);
-        c = a + b;
-        
-        for (int j = a + 1; j <= c; j++) {
-            result *= j;
-        }
-        for (int j = 2; j <= b; j++) {
-            result /= j;
-        }
-    }
+    dp[1][1] = 1;
     
+    if (k != 0) {
+        int mid[2] = {k / m + 1, k % m};
+        int tmp;
 
-    cout << result;
+        for (int i = 1; i <= mid[0]; i++) {
+            for (int j = 1; j <= mid[1]; j++) {
+                dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
+            }
+        }
+        tmp = dp[mid[0]][mid[1]];
+        dp[mid[0]][mid[1]] = 1;
+        
+        for (int i = mid[0]; i <= n; i++) {
+            for (int j = mid[1]; j <= m; j++) {
+                if (i == mid[0] && j == mid[1]) {
+                    continue;
+                }
+                
+                dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
+            }
+        }
+
+        cout << tmp * dp[n][m];
+    } else {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
+            }
+        }
+
+        cout << dp[n][m];
+    }
     
     return 0;
 }
