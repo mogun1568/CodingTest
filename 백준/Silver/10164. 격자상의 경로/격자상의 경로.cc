@@ -12,38 +12,27 @@ int main() {
     cin >> n >> m >> k;
 
     dp[1][1] = 1;
-    
-    if (k != 0) {
-        int mid[2] = {k / m + 1, k % m};
-        int tmp;
 
-        for (int i = 1; i <= mid[0]; i++) {
-            for (int j = 1; j <= mid[1]; j++) {
-                dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
-            }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
         }
-        tmp = dp[mid[0]][mid[1]];
-        dp[mid[0]][mid[1]] = 1;
-        
-        for (int i = mid[0]; i <= n; i++) {
-            for (int j = mid[1]; j <= m; j++) {
-                if (i == mid[0] && j == mid[1]) {
-                    continue;
-                }
-                
-                dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
-            }
-        }
+    }
 
-        cout << tmp * dp[n][m];
+    if (k == 0) {
+         cout << dp[n][m];
     } else {
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                dp[i][j] += dp[i - 1][j] + dp[i][j - 1]; 
-            }
+        int r, c;
+
+        if (k % m == 0) {
+            r = k / m;
+            c = m;
+        } else {
+            r = k / m + 1;
+            c = k % m;
         }
 
-        cout << dp[n][m];
+        cout << dp[r][c] * dp[n - r + 1][m - c + 1];
     }
     
     return 0;
