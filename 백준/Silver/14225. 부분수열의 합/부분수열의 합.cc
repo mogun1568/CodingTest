@@ -4,38 +4,39 @@
 
 using namespace std;
 
-bool visited[2000001];
+#define MAX 2000001
+
+int n;
+int s[21];
+bool visited[MAX];
+
+void dfs(int idx, int sum)
+{
+	if (idx == n) {
+		visited[sum] = true;
+		return;
+	}
+    
+	dfs(idx + 1, sum);
+    dfs(idx + 1, sum + s[idx]);
+}
 
 int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
     
-    
-    int n, s;
     cin >> n;
-
-    vector<int> v = {0};
     for (int i = 0; i < n; i++) {
-        cin >> s;
-        int size = v.size();
-
-        for (int j = 0; j < size; j++) {
-            if (!visited[s + v[j]]) {
-                v.push_back(s + v[j]);
-                visited[s + v[j]] = true;
-            }
-        }
+        cin >> s[i];
     }
 
-    sort(v.begin(), v.end());
+    dfs(0, 0);
 
-    int i;
-    for (i = 1; i < v.size(); i++) {
-        if (i != v[i]) {
+    for (int i = 1; i < MAX; i++) {
+        if (!visited[i]) {
             cout << i;
             break;
         }
-    }
-    if (i == v.size()) {
-        cout << i;
     }
     
     return 0;
