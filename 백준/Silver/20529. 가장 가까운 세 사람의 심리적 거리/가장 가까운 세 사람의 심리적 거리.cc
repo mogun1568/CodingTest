@@ -4,25 +4,17 @@
 
 using namespace std;
 
-vector<string> mbti;
-
-int check(vector<string> v) {
+int check(string a, string b, string c) {
     int cnt = 0;
     
     for (int i = 0; i < 4; i++) {
-        if (v[0][i] != v[1][i]) {
+        if (a[i] != b[i]) {
             cnt++;
         }
-    }
-    
-    for (int i = 0; i < 4; i++) {
-        if (v[0][i] != v[2][i]) {
+        if (a[i] != c[i]) {
             cnt++;
         }
-    }
-    
-    for (int i = 0; i < 4; i++) {
-        if (v[1][i] != v[2][i]) {
+        if (b[i] != c[i]) {
             cnt++;
         }
     }
@@ -30,31 +22,16 @@ int check(vector<string> v) {
     return cnt;
 }
 
-int cbn() {
+int solve(vector<string> v) {
     int result = 100;
     
-    vector<int> s, temp;
-    for (int i = 0; i < mbti.size(); i++) {
-        s.push_back(i);
-
-        if (i < 3) {
-            temp.push_back(1);
-        } else {
-            temp.push_back(0);
-        }
-    }
-
-    vector<string> v;
-    do {
-        for (int i = 0; i < s.size(); i++) {
-            if (temp[i] == 1) {
-                v.push_back(mbti[s[i]]);
+    for (int i = 0; i < v.size() - 2; i++) {
+        for (int j = i + 1; j < v.size() - 1; j++) {
+            for (int k = j + 1; k < v.size(); k++) {
+                result = min(result, check(v[i], v[j], v[k]));
             }
         }
-        
-        result = min(result, check(v));
-        v.clear();
-    } while (prev_permutation(temp.begin(), temp.end()));
+    }
 
     return result;
 }
@@ -69,6 +46,7 @@ int main() {
     while (t--) {
         cin >> n;
 
+        vector<string> mbti;
         string str;
         for (int i = 0; i < n; i++) {
             cin >> str;
@@ -76,12 +54,10 @@ int main() {
         }
 
         if (n < 33) {
-            cout << cbn() << "\n";
+            cout << solve(mbti) << "\n";
         } else {
             cout << 0 << "\n";
         }
-        
-        mbti.clear();
     }
 
     return 0;
