@@ -22,11 +22,7 @@ int main() {
     int n;
     cin >> n;
 
-    string k = to_string(pow(2, n));
-    int idx = k.find('.');
-    k = k.substr(0, idx);
-    k[k.length() - 1] -= 1;	
-    cout << k << "\n";
+    cout << (1 << n) - 1 << "\n";
 
     hanoi(n, 1, 2, 3);
     
