@@ -49,7 +49,7 @@ int main() {
     }
     cin >> start >> arrival;
 
-    fill_n(dp, 1001, 987654321);
+    fill_n(dp, 1001, 200000000);
     
     dp[start] = 0;
     bfs(start);
