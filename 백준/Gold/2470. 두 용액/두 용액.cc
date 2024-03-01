@@ -10,7 +10,7 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n, start, mid, end, mv;
+    int n, start, mid = 2000000000, end, sum;
     cin >> n;
 
     for (int i = 0; i < n; i++) {
@@ -20,26 +20,22 @@ int main() {
 
     start = 0;
     end = n - 1;
-    result[0] = arr[start];
-    result[1] = arr[end];
-    mv = abs(arr[start] + arr[end]);
 
     while (start < end) {
-        mid = arr[start] + arr[end];
+        sum = arr[start] + arr[end];
 
-        if (mid == 0) {
+        if (abs(sum) < mid) {
             result[0] = arr[start];
             result[1] = arr[end];
-            break;
+
+            if (sum == 0) {
+                break;
+            }
+
+            mid = abs(sum);
         }
 
-        if (abs(mid) < mv) {
-            mv = abs(mid);
-            result[0] = arr[start];
-            result[1] = arr[end];
-        }
-
-        if (mid > 0) {
+        if (sum > 0) {
             end--;
         } else {
             start++;
