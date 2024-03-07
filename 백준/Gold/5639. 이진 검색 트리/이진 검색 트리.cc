@@ -2,63 +2,37 @@
 
 using namespace std;
 
-int tree[1000001][3];
-bool cheak;
+int arr[10001];
 
-void dfs(int n, int pn) {
-    if (n < pn) {
-        return;
-    } else {
-        dfs(n, tree[pn][0]);
-    }
-
-    if (cheak) {
+void dfs(int start, int end) {
+	if (start >= end) {
         return;
     }
-
-    if (tree[pn][2] == 0) {
-        tree[pn][2] = n;
-        tree[n][0] = pn;
-        cheak = true;
+	
+    int i;
+	for (i = start + 1; i < end; i++) {
+		if(arr[start] < arr[i]) {
+            break;
+        }
     }
-}
+	
+	dfs(start + 1, i);
+	dfs(i, end);
 
-void dfs2(int n) {
-    if (tree[n][1] != 0) {
-        dfs2(tree[n][1]);
-    }
-    
-    if (tree[n][2] != 0) {
-        dfs2(tree[n][2]);
-    }
-
-    cout << n << "\n";
+	cout << arr[start] << "\n";
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n, pn, r;
-
-    cin >> n;
-    r = n;
-    tree[n][0] = 1000001;
-    pn = n;
+    int n, len = 0;
 
     while (cin >> n) {
-        if (n < pn) {
-            tree[pn][1] = n;
-            tree[n][0] = pn;
-        } else {
-            cheak = false;
-            dfs(n, pn);
-        }  
-
-        pn = n;
+        arr[len++] = n;
     }
 
-    dfs2(r);
+    dfs(0, len);
     
     return 0;
 }
