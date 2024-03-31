@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 
 using namespace std;
 
@@ -98,9 +97,14 @@ int main() {
                 }
             }
 
-            if (f != 0) {
-                result += pow(10, f - 1);
-            }
+            if (f == 1)
+				result++;
+			else if (f == 2)
+				result += 10;
+			else if (f == 3)
+				result += 100;
+			else if (f == 4)
+				result += 1000;
         }
     }
 
