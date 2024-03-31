@@ -1,12 +1,10 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
 
 using namespace std;
 
 int n;
-int clas[21][21];
-vector<int> fr[401];
+int clas[21][21], fr[401][4];
 
 int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, -1, 1};
@@ -75,8 +73,7 @@ int main() {
         cin >> ms;
 
         for (int j = 0; j < 4; j++) {
-            cin >> fri;
-            fr[ms].push_back(fri);
+            cin >> fr[ms][j];
         }
 
         solve(ms);
