@@ -9,7 +9,7 @@ int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, -1, 1};
 
 void solve(int ms) {
-    int rf = 0, re = 0, rr = 0, rc = 0;
+    int rf = -1, re = -1, rr = 0, rc = 0;
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             if (clas[i][j] != 0) {
@@ -48,12 +48,6 @@ void solve(int ms) {
                     rr = r;
                     rc = c;
                 }
-            } else {
-                continue;
-            }
-
-            if (rr == 0 && rc == 0) {
-                rr = r, rc = c;
             }
         }
     }
@@ -97,14 +91,15 @@ int main() {
                 }
             }
 
-            if (f == 1)
+            if (f == 1) {
 				result++;
-			else if (f == 2)
+            } else if (f == 2) {
 				result += 10;
-			else if (f == 3)
+            } else if (f == 3) {
 				result += 100;
-			else if (f == 4)
+            } else if (f == 4) {
 				result += 1000;
+            }
         }
     }
 
