@@ -3,15 +3,15 @@
 using namespace std;
 
 int n;
-int clas[21][21], fr[401][4];
+int clas[20][20], fr[401][4];
 
 int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, -1, 1};
 
 void solve(int ms) {
     int rf = -1, re = -1, rr = 0, rc = 0;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             if (clas[i][j] != 0) {
                 continue;
             }
@@ -21,7 +21,7 @@ void solve(int ms) {
                 int nr = i + dr[k];
                 int nc = j + dc[k];
 
-                if (nr <= 0 || nr > n || nc <= 0 || nc > n) {
+                if (nr < 0 || nr >= n || nc < 0 || nc >= n) {
                     continue;
                 }
 
@@ -72,14 +72,14 @@ int main() {
         solve(ms);
     }
 
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             int ms = clas[i][j], f = 0;
             for (int k = 0; k < 4; k++) {
                 int nr = i + dr[k];
                 int nc = j + dc[k];
 
-                if (nr <= 0 || nr > n || nc <= 0 || nc > n) {
+                if (nr < 0 || nr >= n || nc < 0 || nc >= n) {
                     continue;
                 }
 
