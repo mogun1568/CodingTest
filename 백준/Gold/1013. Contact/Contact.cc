@@ -61,8 +61,7 @@ int main() {
     while (n--) {
         cin >> s;
 
-        string answer = Dfs(s) ? "YES" : "NO";
-        cout << answer << "\n";
+        cout << (Dfs(s) ? "YES\n" : "NO\n");
     }
     
     return 0;
