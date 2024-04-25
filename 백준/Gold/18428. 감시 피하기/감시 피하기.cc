@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int n, bLen;
+int n;
 char hallway[6][6];
 vector<pair<int, int>> blank;
 vector<pair<int, int>> teacher;
@@ -80,7 +80,6 @@ int main() {
             }
         }
     }
-    bLen = blank.size();
 
     Dfs(0, 0);
 
