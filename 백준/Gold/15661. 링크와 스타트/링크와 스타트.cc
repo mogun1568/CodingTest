@@ -24,23 +24,25 @@ int cal() {
 	}
 	return abs(cnt1 - cnt2);
 }
-
-void combination(int cnt) {
-	if (cnt == n) {
-		//팀 비교
-		answer =min(answer,cal());
+void combination(int cnt, int idx) {
+	if (cnt > n / 2) {
 		return;
 	}
-		visited[cnt] = true;
-		combination(cnt + 1);
-		visited[cnt] = false;
-		combination(cnt + 1);
+    
+	if (cnt > 0) {
+		answer = min(cal(), answer);
+	}
+    
+	for (int i = idx; i < n; i++) {
+		visited[i] = true;
+		combination(cnt + 1, i + 1);
+		visited[i] = false;
+	}
 }
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0);
-	cout.tie(0);
 
 	cin >> n;
 	for (int i = 0; i < n; i++) {
@@ -49,7 +51,7 @@ int main() {
 		}
 	}
 
-	combination(0);
+	combination(0, 0);
 	cout << answer;
 	return 0;
 }
