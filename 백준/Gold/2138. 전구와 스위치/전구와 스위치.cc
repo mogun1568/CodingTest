@@ -1,14 +1,15 @@
 #include <iostream>
 #include <string>
-#include <queue>
 #include <algorithm>
 
 using namespace std;
 
-int n, answer;
-string es;
+#define MAX 987654321
 
-string SwitchClick(string s, int idx) {
+int n, answer = MAX;
+string ss, es, s;
+
+string SwitchClick(int idx) {
     for (int i = idx - 1; i <= idx + 1; i++) {
         if (i >= n) {
             continue;
@@ -24,35 +25,32 @@ string SwitchClick(string s, int idx) {
     return s;
 }
 
-int Solve(string s, int def) {
+void Solve(int def) {
+    s = ss;
     int cnt = def;
     
     for (int i = 1; i < n; i++) {
         if (s[i - 1] != es[i - 1]) {
-            s = SwitchClick(s, i);
+            SwitchClick(i);
             cnt++;
         }
 
         if (s == es) {
-            return cnt;
+            answer = min(answer, cnt);
+            return;
         }
     }
 
-    return -1;
+    return;
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
-    string ss;
     cin >> n >> ss >> es;
 
-    int answer = -1, temp1, temp2;
-    temp1 = Solve(ss, 0);
-    if (temp1 >= 0) {
-        answer = temp1;
-    }
+    Solve(0);
 
     for (int i = 0; i < 2; i++) {
         if (ss[i] == '0') {
@@ -61,16 +59,13 @@ int main() {
             ss[i] = '0';
         }
     }
-    temp2 = Solve(ss, 1);
-    if (temp2 >= 0) {
-        if (answer >= 0) {
-            answer = min(answer, temp2);
-        } else {
-            answer = temp2;
-        }
-    }
+    Solve(1);
     
-    cout << answer;
+    if (answer != MAX) {
+        cout << answer;
+    } else {
+        cout << -1;
+    }
     
     return 0;
 }
