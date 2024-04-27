@@ -9,20 +9,12 @@ using namespace std;
 int n, answer = MAX;
 string ss, es, s;
 
-string SwitchClick(int idx) {
-    for (int i = idx - 1; i <= idx + 1; i++) {
-        if (i >= n) {
-            continue;
-        }
-        
-        if (s[i] == '0') {
-            s[i] = '1';
-        } else {
-            s[i] = '0';
-        }
+void SwitchClick(int idx) {
+    s[idx - 1] = (s[idx - 1] == '0') ? '1' : '0';
+    s[idx] = (s[idx] == '0') ? '1' : '0';
+    if (idx + 1 < n) {
+        s[idx + 1] = (s[idx + 1] == '0') ? '1' : '0';
     }
-
-    return s;
 }
 
 void Solve(int def) {
@@ -52,13 +44,8 @@ int main() {
 
     Solve(0);
 
-    for (int i = 0; i < 2; i++) {
-        if (ss[i] == '0') {
-            ss[i] = '1';
-        } else {
-            ss[i] = '0';
-        }
-    }
+    ss[0] = (ss[0] == '0') ? '1' : '0';
+    ss[1] = (ss[1] == '0') ? '1' : '0';
     Solve(1);
     
     if (answer != MAX) {
