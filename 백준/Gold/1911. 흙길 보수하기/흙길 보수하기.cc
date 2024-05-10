@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -23,14 +24,13 @@ int main() {
     int answer = 0, idx = 0;
     for (int i = 0; i < N; i++) {
         idx = max(idx, puddle[i].first + 1);
-        
-        while (idx <= puddle[i].second) {
-            answer++;
-            idx += L;
-        }
+
+        int cnt = ceil((puddle[i].second - idx + 1) / (double)L);
+        answer += cnt;
+        idx += L * cnt;
     }
 
     cout << answer;
-
+    
     return 0;
 }
