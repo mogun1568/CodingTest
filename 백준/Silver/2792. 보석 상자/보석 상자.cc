@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <cmath>
 
 using namespace std;
 
@@ -24,7 +23,10 @@ int main() {
         int cnt = 0;
 
         for (int i = 0; i < M; i++) {
-            cnt += ceil((double)box[i] / mid);
+            cnt += box[i] / mid;
+            if (box[i] % mid != 0) {
+                cnt++;
+            }
         }
 
         if (cnt > N) {
