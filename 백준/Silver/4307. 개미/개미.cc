@@ -3,8 +3,7 @@
 
 using namespace std;
 
-int T, L, N;
-int ant[100000];
+int T, L, N, ant;
 
 int main() {
     ios_base::sync_with_stdio(0);
@@ -14,19 +13,19 @@ int main() {
 
     while (T--) {
         cin >> L >> N;
-        for (int i = 0; i < N; i++) {
-            cin >> ant[i];
-        }
-        sort(ant, ant + N);
 
-        int idx, a = min(L - ant[0], ant[N - 1]), b;
-        for (int i = 1; i < N; i++) {
-            a = min(a, max(ant[i - 1], L - ant[i]));
+        int minTime = 0, maxTime = 0;
+        for (int i = 0; i < N; i++) {
+            cin >> ant;
+
+            int antMin = min(ant, L - ant);
+            int antMax = max(ant, L - ant);
+
+            minTime = max(minTime, antMin);
+            maxTime = max(maxTime, antMax);
         }
     
-        b = max(L - ant[0], ant[N - 1]);
-    
-        cout << a << " " << b << "\n";
+        cout << minTime << " " << maxTime << "\n";
     }
     
     return 0;
