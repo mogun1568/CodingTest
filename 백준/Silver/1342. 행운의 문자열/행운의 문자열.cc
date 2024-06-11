@@ -1,33 +1,18 @@
 #include <iostream>
 #include <string>
-#include <vector>
+#include <algorithm>
 
 using namespace std;
 
 string S;
-vector<char> alpha;
-int arr[26];
-bool visited[10];
-int len, answer, temp = 1;
 
-void Dfs(int cnt, char preC) {
-    if (cnt == len) {
-        answer++;
-        return;
+bool Check(string s) {
+    for (int i = 1; i < s.length(); i++) {
+        if (s[i - 1] == s[i])
+            return false;
     }
 
-    //cout << cnt << "\n";
-    for (int i = 0; i < len; i++) {
-        if (alpha[i] == preC)
-            continue;
-
-        if (visited[i])
-            continue;
-
-        visited[i] = true;
-        Dfs(cnt + 1, alpha[i]);
-        visited[i] = false;
-    }
+    return true;
 }
 
 int main() {
@@ -35,17 +20,15 @@ int main() {
     cin.tie(0);
     
     cin >> S;
-    len = S.length();
-    for (int i = 0; i < len; i++) {
-        alpha.push_back(S[i]);
+    sort(S.begin(), S.end());
 
-        arr[S[i] - 'a']++;
-        temp *= arr[S[i] - 'a'];
-    }
+    int answer = 0;
+	do {
+		if (Check(S))
+            answer++;
+	} while (next_permutation(S.begin(), S.end()));
 
-    Dfs(0, '0');
-
-    cout << answer / temp;
+    cout << answer;
     
     return 0;
 }
