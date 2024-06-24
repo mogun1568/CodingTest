@@ -6,7 +6,6 @@ using namespace std;
 
 int R, C, answer;
 char board[20][20];
-bool visited[20][20];
 bool alpha[26];
 
 int dr[4] = {-1, 1, 0, 0};
@@ -23,13 +22,11 @@ void Dfs(int r, int c, int cnt) {
             continue;
 
         int idx = board[nr][nc] - 'A';
-        if (visited[nr][nc] || alpha[idx])
+        if (alpha[idx])
             continue;
 
-        visited[nr][nc] = true;
         alpha[idx] = true;
         Dfs(nr, nc, cnt + 1);
-        visited[nr][nc] = false;
         alpha[idx] = false;
     }
 }
@@ -45,7 +42,6 @@ int main() {
         }
     }
 
-    visited[0][0] = true;
     alpha[board[0][0] - 'A'] = true;
     Dfs(0, 0, 1);
 
