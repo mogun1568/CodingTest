@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define MAX 98765432
+#define MAX 987654321
 
 int N, M, a, b, c;
 
