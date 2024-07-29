@@ -3,40 +3,46 @@
 using namespace std;
 
 int N, M;
-int citys[201][201];
-int travel[1000];
+int parent[201];
+
+int Find(int x) {
+	if (parent[x] == x) return x;
+	return parent[x] = Find(parent[x]);
+}
+
+void Union(int x, int y) {
+	x = Find(x);
+	y = Find(y);
+	if (x < y) parent[y] = x;
+	else parent[x] = y;
+}
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
     cin >> N >> M;
+
+    for (int i = 1; i <= N; i++) {
+        parent[i] = i;
+    }
+
+    int x, root;
     for (int i = 1; i <= N; i++) {
         for (int j = 1; j <= N; j++) {
-            cin >> citys[i][j];
-        }
-    }
-    for (int i = 0; i < M; i++) {
-        cin >> travel[i];
-    }
+            cin >> x;
 
-    for (int k = 1; k <= N; k++) {
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= N; j++) {
-                if (citys[i][j] == 1)
-                    continue;
-
-                if (i == j)
-                    citys[i][j] = 1;
-
-                if (citys[i][k] == 1 && citys[k][j] == 1)
-                    citys[i][j] = 1;
-            }
+            if (x == 1)
+                Union(i, j);
         }
     }
 
+    cin >> x;
+    root = Find(x);
     for (int i = 1; i < M; i++) {
-        if (citys[travel[i - 1]][travel[i]] == 0) {
+        cin >> x;
+
+        if (root != Find(x)) {
             cout << "NO";
             return 0;
         }
