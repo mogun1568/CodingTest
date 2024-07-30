@@ -6,19 +6,16 @@ using namespace std;
 int R, C, answer;
 char forest[50][50];
 bool visited[50][50];
-queue<pair<pair<int, int>, int>> water, S;
+queue<pair<int, int>> water, S;
 
 int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, 1, -1};
 
 bool Solve() {
-    while (!S.empty()) {
-        int cr = S.front().first.first;
-        int cc = S.front().first.second;
-        int cm = S.front().second;
-        
-        if (cm == answer + 1)
-            break;  
+    int t = S.size();
+    while (t--) {
+        int cr = S.front().first;
+        int cc = S.front().second;
         S.pop();
 
         if (forest[cr][cc] == '*')
@@ -37,17 +34,14 @@ bool Solve() {
                 continue;
 
             visited[nr][nc] = true;
-            S.push({{nr, nc}, cm + 1});
+            S.push({nr, nc});
         }
     }
 
-    while (!water.empty()) {
-        int cr = water.front().first.first;
-        int cc = water.front().first.second;
-        int cm = water.front().second;
-        
-        if (cm == answer + 1)
-            break;  
+    t = water.size();
+    while (t--) {
+        int cr = water.front().first;
+        int cc = water.front().second;
         water.pop();
 
         for (int i = 0; i < 4; i++) {
@@ -61,7 +55,7 @@ bool Solve() {
                 continue;
 
             forest[nr][nc] = '*';
-            water.push({{nr, nc}, cm + 1});
+            water.push({nr, nc});
         }
     }
 
@@ -78,10 +72,10 @@ int main() {
             cin >> forest[i][j];
 
             if (forest[i][j] == '*')
-                water.push({{i, j}, 0});
+                water.push({i, j});
             else if (forest[i][j] == 'S') {
                 visited[i][j] = true;
-                S.push({{i, j}, 0});
+                S.push({i, j});
                 forest[i][j] = '.';
             }               
         }
