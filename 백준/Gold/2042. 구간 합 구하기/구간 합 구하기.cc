@@ -51,23 +51,23 @@ int main() {
     cin.tie(0);
     
     cin >> N >> M >> K;
-    for (int i = 0; i < N; i++) {
+    for (int i = 1; i <= N; i++) {
         cin >> arr[i];
     }
 
-    Init(1, 0, N - 1);
+    Init(1, 1, N);
 
     long long a, b, c;
     for (int i = 0; i < M + K; i++) {
         cin >> a >> b >> c;
 
         if (a == 1) {
-            long long diff = c - arr[b - 1];
-            arr[b - 1] = c;
-            Update(1, 0, N - 1, b - 1, diff);
+            long long diff = c - arr[b];
+            arr[b] = c;
+            Update(1, 1, N, b, diff);
         }
         else {
-            cout << Sum(1, 0, N - 1, b - 1, c - 1) << "\n";
+            cout << Sum(1, 1, N, b, c) << "\n";
         }
     }
     
