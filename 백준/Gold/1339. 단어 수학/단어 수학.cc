@@ -28,9 +28,7 @@ int main() {
 
     int idx = 0, a = 9;
     while (alpha[idx] > 0) {
-        answer += alpha[idx] * a;
-        idx++;
-        a--;
+        answer += alpha[idx++] * a--;
     }
 
     cout << answer;
