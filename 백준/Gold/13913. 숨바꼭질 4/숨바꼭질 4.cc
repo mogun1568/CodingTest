@@ -8,7 +8,6 @@ using namespace std;
 
 int N, K;
 int point[MAX];
-bool visited[MAX];
 
 void Bfs() {
     queue<int> q;
