@@ -22,21 +22,10 @@ void Bfs() {
             return;
         }
 
-        int next = cur - 1;
-        if (next >= 0) {
-            if (point[next] == 0) {
-                point[next] = point[cur] + 1;
-                dp[next] = dp[cur];
-                q.push(next);
-            }
-            else {
-                if (point[cur] + 1 == point[next])
-                    dp[next] += dp[cur];
-            }        
-        }
+        for (int next : {cur - 1, cur + 1, cur * 2}) {
+            if (next < 0 || next >= MAX)
+                continue;
 
-        next = cur + 1;
-        if (next < MAX) {
             if (point[next] == 0) {
                 point[next] = point[cur] + 1;
                 dp[next] = dp[cur];
@@ -45,20 +34,7 @@ void Bfs() {
             else {
                 if (point[cur] + 1 == point[next])
                     dp[next] += dp[cur];
-            } 
-        }
-
-        next = cur * 2;
-        if (next < MAX) {
-            if (point[next] == 0) {
-                point[next] = point[cur] + 1;
-                dp[next] = dp[cur];
-                q.push(next);
             }
-            else {
-                if (point[cur] + 1 == point[next])
-                    dp[next] += dp[cur];
-            } 
         }
     }
 }
@@ -68,6 +44,11 @@ int main() {
     cin.tie(0);
     
     cin >> N >> K;
+
+    if (N == K) {
+        cout << 0 << "\n" << 1;
+        return 0;
+    }
 
     Bfs();
 
