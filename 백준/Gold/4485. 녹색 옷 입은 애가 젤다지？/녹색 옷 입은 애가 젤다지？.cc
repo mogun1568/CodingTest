@@ -11,14 +11,15 @@ int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, -1, 1};
 
 void Bfs() {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    queue<pair<int, int>> q;
     visited[0][0] = matrix[0][0];
-    pq.push({0, 0});
+    q.push({0, 0});
 
-    while (!pq.empty()) {
-        int cr = pq.top().first;
-        int cc = pq.top().second;
-        pq.pop();
+    int a = 0;
+    while (!q.empty()) {
+        int cr = q.front().first;
+        int cc = q.front().second;
+        q.pop();
 
         for (int i = 0; i < 4; i++) {
             int nr = cr + dr[i];
@@ -32,7 +33,7 @@ void Bfs() {
                 continue;
 
             visited[nr][nc] = nCost;
-            pq.push({nr, nc});
+            q.push({nr, nc});
         }
     }
 }
