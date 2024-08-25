@@ -2,9 +2,10 @@
 
 using namespace std;
 
-long long N, M, answer;
+int N, M;
+long long answer;
 long long sumMod[1000001];
-long long cnt[1000001];
+long long mod[1000];
 
 int main() {
     ios_base::sync_with_stdio(0);
@@ -17,26 +18,11 @@ int main() {
         sumMod[i] %= M;
     }
 
-    for (int i = 1; i <= N; i++) {
-        if (sumMod[i] == 0) {
-            cnt[i] = 1;
-            for (int j = i - 1; j > 0; j--) {
-                if (sumMod[j] == sumMod[i]) {
-                    cnt[i] += cnt[j];
-                    break;
-                }
-            }
-        }
-        else {
-            for (int j = i - 1; j > 0; j--) {
-                if (sumMod[j] == sumMod[i]) {
-                    cnt[i] = cnt[j] + 1;
-                    break;
-                }
-            }
-        }
+    for (int i = 1; i < M; i++)
+        mod[i] = -1;
 
-        answer += cnt[i];
+    for (int i = 1; i <= N; i++) {
+        answer += ++mod[sumMod[i]];
     }
 
     cout << answer;
