@@ -4,7 +4,6 @@ using namespace std;
 
 int N, M;
 long long answer;
-long long sumMod[1000001];
 long long mod[1000];
 
 int main() {
@@ -12,18 +11,18 @@ int main() {
     cin.tie(0);
     
     cin >> N >> M;
+
+    int a, temp = 0;
     for (int i = 1; i <= N; i++) {
-        cin >> sumMod[i];
-        sumMod[i] += sumMod[i - 1];
-        sumMod[i] %= M;
+        cin >> a;
+        temp = (temp + a) % M;
+        mod[temp]++;
     }
 
-    for (int i = 1; i < M; i++)
-        mod[i] = -1;
-
-    for (int i = 1; i <= N; i++) {
-        answer += ++mod[sumMod[i]];
+    for (int i = 0; i < M; i++) {
+        answer += mod[i] * (mod[i] - 1) / 2;
     }
+    answer += mod[0];
 
     cout << answer;
     
