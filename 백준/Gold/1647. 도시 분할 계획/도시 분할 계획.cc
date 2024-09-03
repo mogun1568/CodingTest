@@ -1,37 +1,23 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <algorithm>
 
 using namespace std;
 
-int N, M, maxCost, answer;
-vector<pair<int, int>> roads[100001];
-bool visited[100001];
+int N, M, answer;
+int parent[100001];
+vector<pair<int, pair<int, int>>> roads;
 
-void Bfs() {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, 1});
+int Find(int x) {
+	if (parent[x] == x) return x;
+	return parent[x] = Find(parent[x]);
+}
 
-    while (!pq.empty()) {
-        int cur = pq.top().second;
-        int cCost = pq.top().first;
-        pq.pop();
-
-        if (visited[cur])
-            continue;
-
-        visited[cur] = true;
-        answer += cCost;
-        maxCost = max(maxCost, cCost);
-
-        for (int i = 0; i < roads[cur].size(); i++) {
-            int next = roads[cur][i].first;
-            int nCost = roads[cur][i].second;
-
-            pq.push({nCost, next});
-        }
-    }
+void Union(int x, int y) {
+	x = Find(x);
+	y = Find(y);
+	if (x < y) parent[y] = x;
+	else parent[x] = y;
 }
 
 int main() {
@@ -43,11 +29,27 @@ int main() {
     int a, b, c;
     for (int i = 0; i < M; i++) {
         cin >> a >> b >> c;
-        roads[a].push_back({b, c});
-        roads[b].push_back({a, c});
+        roads.push_back({c, {a, b}});
+    }
+    sort(roads.begin(), roads.end());
+
+    for (int i = 1; i <= N; i++) {
+        parent[i] = i;
     }
 
-    Bfs();
+    int maxCost = 0;
+    for (int i = 0; i < M; i++) {
+        int a = roads[i].second.first;
+        int b = roads[i].second.second;
+        int c = roads[i].first;
+
+        if (Find(a) != Find(b)) {
+            Union(a, b);
+            answer += c;
+            maxCost = max(maxCost, c);
+            
+        }
+    }
 
     cout << answer - maxCost;
     
