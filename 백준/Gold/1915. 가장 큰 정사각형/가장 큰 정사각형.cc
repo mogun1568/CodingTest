@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int n, m, answer;
+int n, m;
 int arr[1001][1001];
 
 int main() {
@@ -14,26 +14,21 @@ int main() {
         cin >> s;
         for (int j = 1; j <= m; j++) {
             arr[i][j] = s[j - 1] - '0';
-            arr[i][j] = arr[i][j] + arr[i - 1][j] + arr[i][j - 1] - arr[i - 1][j - 1];
         }
     }
 
+    int len = 0;
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
-            int k = 1, cnt = 0;
-            while (k <= i) {
-                cnt = arr[i][j] - arr[i - k][j] - arr[i][j - k] + arr[i - k][j - k];
-                if (cnt == k * k)
-                    answer = max(answer, cnt);
-                else
-                    break;
-                
-                k++;
-            }
+            if (arr[i][j] == 0)
+                continue;
+            
+            arr[i][j] = min(min(arr[i - 1][j], arr[i][j - 1]), arr[i - 1][j - 1]) + 1;
+            len = max(len, arr[i][j]);
         }
     }
     
-    cout << answer;
+    cout << len * len;
     
     return 0;
 }
