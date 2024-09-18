@@ -5,7 +5,7 @@ using namespace std;
 
 #define INF 987654321
 
-int N, M, H, answer = INF;
+int N, M, H, answer = -1;
 bool ladder[31][11];
 
 bool Check() {
@@ -25,23 +25,22 @@ bool Check() {
     return true;
 }
 
-void Dfs(int idx, int cnt) {
-    if (cnt > 3)
-        return;
+void Dfs(int idx, int cnt, int maxCnt) {
+    if (cnt == maxCnt) {
+        if (Check()) {
+            answer = cnt;
+        }
 
-    if (Check()) {
-        answer = min(answer, cnt);
         return;
-    }
+    } 
 
     for (int i = idx; i <= H; i++) {
         for (int j = 1; j < N; j++) {
-            if (ladder[i][j]) continue;
-            if (ladder[i][j - 1]) continue;
-            if (ladder[i][j + 1]) continue;
+            if (ladder[i][j] || ladder[i][j - 1] || ladder[i][j + 1])
+                continue;
 
             ladder[i][j] = true;
-            Dfs(i, cnt + 1);
+            Dfs(i, cnt + 1, maxCnt);
             ladder[i][j] = false;
         }
     }
@@ -58,13 +57,15 @@ int main() {
         cin >> a >> b;
         ladder[a][b] = true;
     }
-    
-    Dfs(1, 0);
 
-    if (answer == INF)
-        cout << -1;
-    else
-        cout << answer;
+    for (int i = 0; i < 4; i++) {
+        if (answer != -1)
+            continue;
+        
+        Dfs(1, 0, i);
+    }    
+
+    cout << answer;
     
     return 0;
 }
