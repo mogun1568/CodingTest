@@ -19,12 +19,10 @@ int main() {
     for (int i = 1; i <= a; i++) {
         for (int j = 1; j <= b; j++) {
             for (int k = 1; k <= c; k++) {
-                if (s1[i - 1] == s2[j - 1] && s1[i - 1] == s3[k - 1] && s2[j - 1] == s3[k - 1]) {
+                if (s1[i - 1] == s2[j - 1] && s2[j - 1] == s3[k - 1])
                     dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1;
-                }
-                else {
+                else
                     dp[i][j][k] = max(max(dp[i - 1][j][k], dp[i][j - 1][k]), dp[i][j][k - 1]);
-                }
             }
         }
     }
