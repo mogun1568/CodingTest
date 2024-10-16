@@ -1,11 +1,13 @@
 #include <iostream>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
 int N, gcd;
 int arr[100];
 int diff[99];
+set<int> s;
 
 int Gcd(int a, int b) {
 	int c = a % b;
@@ -35,10 +37,15 @@ int main()
         gcd = Gcd(max(gcd, diff[i]), min(gcd, diff[i]));
 
     for (int i = 2; i <= gcd / 2; i++) {
-        if (gcd % i == 0)
-            cout << i << "\n";
+        if (gcd % i == 0) {
+            s.insert(i);
+            s.insert(gcd / i);
+        }
     }
-    cout << gcd;
+    s.insert(gcd);
+
+    for (auto i : s)
+        cout << i << "\n";
 
     return 0;
 }
