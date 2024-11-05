@@ -13,8 +13,8 @@ int main() {
     set<string> str;
     
     for (int i = 0; i < s.length(); i++) {
-        for (int j = 1; j <= s.length(); j++)
-            str.insert(s.substr(i, j));
+        for (int j = i; j < s.length(); j++)
+            str.insert(s.substr(i, j - i + 1));
     }
 
     cout << str.size();
