@@ -13,7 +13,7 @@ int main() {
     cin >> N >> pattern;
 
     pattern.replace(pattern.find("*"), 1, "\\w*");
-    regex re(pattern, regex::optimize);
+    regex re(pattern);
     
     while (N--) {
         cin >> s;
