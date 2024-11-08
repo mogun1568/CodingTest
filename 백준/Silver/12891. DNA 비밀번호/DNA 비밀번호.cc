@@ -12,21 +12,19 @@ int main() {
 
     cin >> S >> P >> dna >> A >> C >> G >> T;
 
-    int i;
-    for (i = 0; i < P; i++)
+    for (int i = 0; i < S; i++) {
         alpha[dna[i] - 'A']++;
-    
-    if (alpha['A' - 'A'] >= A && alpha['C' - 'A'] >= C && alpha['G' - 'A'] >= G && alpha['T' - 'A'] >= T)
-            ans++;
+        
+        if (i < P - 1) 
+            continue;
 
-    for (i; i < S; i++) {
-        alpha[dna[i] - 'A']++;
-        alpha[dna[i - P] - 'A']--;
+        if (i > P - 1)
+            alpha[dna[i - P] - 'A']--;
 
         if (alpha['A' - 'A'] >= A && alpha['C' - 'A'] >= C && alpha['G' - 'A'] >= G && alpha['T' - 'A'] >= T)
             ans++;
     }
-
+    
     cout << ans;
     
     return 0;
