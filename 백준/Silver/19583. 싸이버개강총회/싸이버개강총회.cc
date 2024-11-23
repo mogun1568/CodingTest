@@ -7,26 +7,16 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int S, E, Q, h, m, ans = 0;
-    string strS, strE, strQ;
-    
-    scanf("%d:%d", &h, &m);
-    S = h * 60 + m;
-    scanf("%d:%d", &h, &m);
-    E = h * 60 + m;
-    scanf("%d:%d", &h, &m);
-    Q = h * 60 + m;
+    int ans = 0;
+    string S, E, Q;
+    cin >> S >> E >> Q;
 
     unordered_map<string, int> um;
+    string t, name;
 
-    char temp[21];
-    while (scanf("%d:%d %s", &h, &m, temp) == 3) {
-        int t = h * 60 + m;
-        string name(temp);
-
+    while (cin >> t >> name) {
         if (t <= S) {
-            if (um.count(name) == 0)
-                um[name]++;
+            um[name] = 1;
         }
         else if (t >= E && t <= Q) {
             if (um[name] == 1) {
