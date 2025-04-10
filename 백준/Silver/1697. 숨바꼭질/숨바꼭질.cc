@@ -1,39 +1,34 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
+#define MAX 100000
 
-int visit[100001];
+bool visited[MAX];
 
-int n, k;
-
-int bfs(int k) {
+int BFS(int n, int k) {
     queue<pair<int, int>> q;
-    q.push({k, 0});
-    visit[k] = true;
+    visited[n] = true;
+    q.push({n, 0});
 
-    while (1) {
-        int t = q.front().first;
-        int cnt = q.front().second;
+    while (!q.empty()) {
+        int c = q.front().first;
+        int t = q.front().second;
         q.pop();
 
-        if (t == n) {
-            return cnt;
-        }
+        if (c == k)
+            return t;
 
-        if (t % 2 == 0 && !visit[t / 2]) {
-            visit[t / 2] = true;
-            q.push({t / 2, cnt + 1});
+        if (c - 1 >= 0 && !visited[c - 1]) {
+            visited[c - 1] = true;
+            q.push({c - 1, t + 1});
         }
-
-        if (t < 100000 && !visit[t + 1]) {
-            visit[t + 1] = true;
-            q.push({t + 1, cnt + 1});
+        if (c + 1 <= MAX && !visited[c + 1]) {
+            visited[c + 1] = true;
+            q.push({c + 1, t + 1});
         }
-        
-        if (t > 0 && !visit[t - 1]) {
-            visit[t - 1] = true;
-            q.push({t - 1, cnt + 1});
+        if (c * 2 <= MAX && !visited[c * 2]) {
+            visited[c * 2] = true;
+            q.push({c * 2, t + 1});
         }
     }
 
@@ -44,9 +39,10 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
-    cin >> n >> k;
-
-    cout << bfs(k);
+    int N, K;
+    cin >> N >> K;
+    
+    cout << BFS(N, K);
     
     return 0;
 }
