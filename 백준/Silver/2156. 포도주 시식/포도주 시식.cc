@@ -3,28 +3,27 @@
 
 using namespace std;
 
-int wg[10001], dp[10001];
+int wine[10001];
+int DP[10001];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n;
+    int N;
+    cin >> N;
+    cin >> wine[1] >> wine[2];
 
-    cin >> wg[1] >> wg[2];
+    DP[1] = wine[1];
+    DP[2] = wine[1] + wine[2];
 
-    dp[1] = wg[1];
-    dp[2] = wg[1] + wg[2];
+    for (int i = 3; i <= N; i++) {
+        cin >> wine[i];
 
-    for (int i = 3; i <= n; i++) {
-        cin >> wg[i];
-
-        // dp[i - 3] + wg[i - 1] + wg[i], dp[i - 2] + wg[i], dp[i - 1] 중에 가장 큰 값
-        dp[i] = max(dp[i - 3] + wg[i - 1] + wg[i], max(dp[i - 2] + wg[i], dp[i - 1]));
+        DP[i] = max(DP[i - 3] + wine[i - 1] + wine[i], max(DP[i - 2] + wine[i], DP[i - 1]));
     }
-
-    cout << dp[n];
-
+    
+    cout << DP[N];
+    
     return 0;
 }
