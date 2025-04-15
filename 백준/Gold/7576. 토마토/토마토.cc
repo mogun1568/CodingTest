@@ -3,62 +3,60 @@
 
 using namespace std;
 
+int M, N, ans, cnt;
 int box[1000][1000];
+queue<pair<int, int>> q;
 
-int dr[4] = {0, 0, 1, -1};
+int dr[4] = {0, 0, -1, 1};
 int dc[4] = {-1, 1, 0, 0};
 
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    
-    int m, n, cnt, result;
-    cin >> m >> n;
-
-    cnt = m * n;
-    queue<pair<int, int>> q;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            cin >> box[i][j];
-
-            if (box[i][j] == 1) {
-                q.push({i, j});
-            }
-
-            if (box[i][j] != 0) {
-                cnt--;
-            }
-        }
-    }
-
+void BFS() {
     while (!q.empty()) {
         int r = q.front().first;
         int c = q.front().second;
         q.pop();
 
-        result = box[r][c] - 1;
+        ans = box[r][c] - 1;
+        cnt--;
 
         for (int i = 0; i < 4; i++) {
             int nr = r + dr[i];
             int nc = c + dc[i];
 
-            if (nr < 0 || nr >= n || nc < 0 || nc >= m) {
+            if (nr < 0 || nr >= N || nc < 0 || nc >= M)
                 continue;
-            }
+            
+            if (box[nr][nc] != 0)
+                continue;
 
-            if (box[nr][nc] == 0) {
-                box[nr][nc] = box[r][c] + 1;
-                q.push({nr, nc});
-                cnt--;
-            }
+            box[nr][nc] = box[r][c] + 1;
+            q.push({nr, nc});
+        }
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> M >> N;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            cin >> box[i][j];
+
+            if (box[i][j] == 1)
+                q.push({i, j});
+            if (box[i][j] != -1)
+                cnt++;
         }
     }
 
-    if (cnt > 0) {
-        cout << -1;
-    } else {
-        cout << result;
-    }
+    BFS();
 
+    if (cnt == 0)
+        cout << ans;
+    else
+        cout << -1;
+    
     return 0;
 }
