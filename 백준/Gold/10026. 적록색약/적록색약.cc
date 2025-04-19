@@ -2,22 +2,22 @@
 #include <string>
 #include <queue>
 #include <cstring>
-
 using namespace std;
 
-int n;
-char picture[100][100];
+int N;
+char area[100][100];
 bool visited[100][100];
 
 int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, -1, 1};
 
-void bfs(int r, int c) {
+void BFS(int r, int c) {
+    char cur = area[r][c];
     queue<pair<int, int>> q;
     visited[r][c] = true;
     q.push({r, c});
 
-    while (!q.empty()) {
+    while(!q.empty()) {
         int cr = q.front().first;
         int cc = q.front().second;
         q.pop();
@@ -26,13 +26,11 @@ void bfs(int r, int c) {
             int nr = cr + dr[i];
             int nc = cc + dc[i];
 
-            if (nr < 0 || nr >= n || nc < 0 || nc >= n) {
+            if (nr < 0 || nr >= N || nc < 0 || nc >= N)
                 continue;
-            }
 
-            if (visited[nr][nc] || picture[nr][nc] != picture[cr][cc]) {
+            if (visited[nr][nc] || area[nr][nc] != cur)
                 continue;
-            }
 
             visited[nr][nc] = true;
             q.push({nr, nc});
@@ -43,55 +41,48 @@ void bfs(int r, int c) {
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    cin >> n;
+
+    cin >> N;
 
     string s;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < N; i++) {
         cin >> s;
-        for (int j = 0; j < n; j++) {
-            picture[i][j] = s[j];
-        }
+        for (int j = 0; j < N; j++)
+            area[i][j] = s[j];
     }
 
     int cnt = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (visited[i][j]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (visited[i][j])
                 continue;
-            }
 
-            bfs(i, j);
             cnt++;
+            BFS(i, j);
+        }
+    }
+    cout << cnt << "\n";
+    
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (area[i][j] == 'R')
+                area[i][j] = 'G';
         }
     }
 
-    cout << cnt << " ";
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (picture[i][j] == 'G') {
-                picture[i][j] = 'R';
-            }
-
-        }
-    }
-
-    memset(visited, false, sizeof(visited));
     cnt = 0;
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (visited[i][j]) {
+    memset(visited, false, sizeof(visited));
+    
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (visited[i][j])
                 continue;
-            }
 
-            bfs(i, j);
             cnt++;
+            BFS(i, j);
         }
     }
-
-    cout << cnt;
+    cout << cnt << "\n";
     
     return 0;
 }
