@@ -1,33 +1,30 @@
 #include <iostream>
-#include <vector>
 #include <queue>
-
+#include <vector>
 using namespace std;
-
 #define INF 3000000
 
-int V, E, K;
-vector<pair<int, int>> line[20001];
-int path[20001];
+vector<pair<int, int>> edge[20001];
+int weight[20001];
 
-void dijkstra() {
+void Dijkstra(int k) {
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    path[K] = 0;
-    pq.push({0, K});
+    weight[k] = 0;
+    pq.push({0, k});
 
     while (!pq.empty()) {
         int u = pq.top().second;
         int w = pq.top().first;
         pq.pop();
 
-        for (int i = 0; i < line[u].size(); i++) {
-            int v = line[u][i].first;
-            int nw = w + line[u][i].second;
+        for (int i = 0; i < edge[u].size(); i++) {
+            int v = edge[u][i].first;
+            int nw = w + edge[u][i].second;
 
-            if (path[v] <= nw)
+            if (weight[v] <= nw)
                 continue;
 
-            path[v] = nw;
+            weight[v] = nw;
             pq.push({nw, v});
         }
     }
@@ -36,25 +33,26 @@ void dijkstra() {
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    cin >> V >> E >> K;
 
-    int u, v, w;
+    int V, E, K, u, v, w;
+    cin >> V >> E >> K;
     for (int i = 0; i < E; i++) {
         cin >> u >> v >> w;
-        line[u].push_back({v, w});
+        edge[u].push_back({v, w});
     }
 
     for (int i = 1; i <= V; i++)
-        path[i] = INF;
+        weight[i] = INF;
 
-    dijkstra();
+    Dijkstra(K);
 
-    for (int i = 1; i <= V; i++)
-        if (path[i] == INF)
-            cout << "INF\n";
+    for (int i = 1; i <= V; i++) {
+        if (weight[i] == INF)
+            cout << "INF";
         else
-            cout << path[i] << "\n";
+            cout << weight[i];
+        cout << "\n";
+    }
     
     return 0;
 }
