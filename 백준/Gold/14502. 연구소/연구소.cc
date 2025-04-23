@@ -3,18 +3,17 @@
 #include <queue>
 #include <cstring>
 #include <algorithm>
-
 using namespace std;
 
-int N, M, answer;
-int institute[8][8];
+int N, M, ans;
+int lab[8][8];
 bool visited[8][8];
 vector<pair<int, int>> v;
 
 int dr[4] = {-1, 1, 0, 0};
 int dc[4] = {0, 0, -1, 1};
 
-int Bfs(int r, int c) {
+int BFS(int r, int c) {
     queue<pair<int, int>> q;
     visited[r][c] = true;
     q.push({r, c});
@@ -26,10 +25,10 @@ int Bfs(int r, int c) {
         int cc = q.front().second;
         q.pop();
 
-        cnt++;
-        if (institute[cr][cc] == 2)
-            //cout << cr << " " << cc << "\n";
+        if (lab[cr][cc] == 2)
             checkVirus = true;
+
+        cnt++;
 
         for (int i = 0; i < 4; i++) {
             int nr = cr + dr[i];
@@ -38,7 +37,7 @@ int Bfs(int r, int c) {
             if (nr < 0 || nr >= N || nc < 0 || nc >= M)
                 continue;
 
-            if (institute[nr][nc] == 1)
+            if (lab[nr][nc] == 1)
                 continue;
             
             if (visited[nr][nc])
@@ -49,8 +48,8 @@ int Bfs(int r, int c) {
         }
     }
 
-    if (checkVirus) 
-        cnt = 0;
+    if (checkVirus)
+        return 0;
     
     return cnt;
 }
@@ -61,13 +60,13 @@ int FindZero() {
     
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
-            if (institute[i][j] == 1) 
+            if (lab[i][j] == 1) 
                 continue;
 
             if (visited[i][j])
                 continue;
 
-            cnt += Bfs(i, j);
+            cnt += BFS(i, j);
         }
     }
 
@@ -78,13 +77,13 @@ void Solve() {
     for (int i = 0; i < v.size() - 2; i++) {
         for (int j = i + 1; j < v.size() - 1; j++) {
             for (int k = j + 1; k < v.size(); k++) {
-                institute[v[i].first][v[i].second] = 1;
-                institute[v[j].first][v[j].second] = 1;
-                institute[v[k].first][v[k].second] = 1;
-                answer = max(answer, FindZero());
-                institute[v[i].first][v[i].second] = 0;
-                institute[v[j].first][v[j].second] = 0;
-                institute[v[k].first][v[k].second] = 0;
+                lab[v[i].first][v[i].second] = 1;
+                lab[v[j].first][v[j].second] = 1;
+                lab[v[k].first][v[k].second] = 1;
+                ans = max(ans, FindZero());
+                lab[v[i].first][v[i].second] = 0;
+                lab[v[j].first][v[j].second] = 0;
+                lab[v[k].first][v[k].second] = 0;
             }
         }
     } 
@@ -97,16 +96,16 @@ int main() {
     cin >> N >> M;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
-            cin >> institute[i][j];
+            cin >> lab[i][j];
 
-            if (institute[i][j] == 0)
+            if (lab[i][j] == 0)
                 v.push_back({i, j});
         }
     }
 
     Solve();
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
