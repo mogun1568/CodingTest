@@ -1,41 +1,33 @@
 #include <iostream>
 #include <algorithm>
-
 using namespace std;
 
-int sticker[2][100000];
-int dp[2][100000];
-
-int test(int n) {
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> sticker[i][j];
-        }
-    }
-
-    dp[0][0] = sticker[0][0];
-    dp[1][0] = sticker[1][0];
-    dp[0][1] = sticker[0][1] + dp[1][0];
-    dp[1][1] = sticker[1][1] + dp[0][0];
-
-    for (int i = 2; i < n; i++) {
-        dp[0][i] = sticker[0][i] + max(dp[1][i - 1], dp[1][i - 2]);
-        dp[1][i] = sticker[1][i] + max(dp[0][i - 1], dp[0][i - 2]);
-    }
-
-    return max(dp[0][n - 1], dp[1][n - 1]);
-}
+int DP[2][100000];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    int t, n;
-    cin >> t;
 
-    while (t--) {
-        cin >> n;
-        cout << test(n) << "\n";
+    int T, N;
+    cin >> T;
+
+    while (T--) {
+        cin >> N;
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < N; j++)
+                cin >> DP[i][j];
+        }
+
+        DP[0][1] += DP[1][0];
+        DP[1][1] += DP[0][0];
+
+        for (int i = 2; i < N; i++) {
+            DP[0][i] += max(DP[1][i - 1], max(DP[0][i - 2], DP[1][i - 2]));
+            DP[1][i] += max(DP[0][i - 1], max(DP[0][i - 2], DP[1][i - 2]));
+        }
+
+        cout << max(DP[0][N - 1], DP[1][N - 1]) << "\n";
     }
     
     return 0;
