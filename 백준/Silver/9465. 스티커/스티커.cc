@@ -23,8 +23,8 @@ int main() {
         DP[1][1] += DP[0][0];
 
         for (int i = 2; i < N; i++) {
-            DP[0][i] += max(DP[1][i - 1], max(DP[0][i - 2], DP[1][i - 2]));
-            DP[1][i] += max(DP[0][i - 1], max(DP[0][i - 2], DP[1][i - 2]));
+            DP[0][i] += max(DP[1][i - 1], DP[1][i - 2]);
+            DP[1][i] += max(DP[0][i - 1], DP[0][i - 2]);
         }
 
         cout << max(DP[0][N - 1], DP[1][N - 1]) << "\n";
