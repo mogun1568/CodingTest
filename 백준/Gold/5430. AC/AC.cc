@@ -1,66 +1,65 @@
 #include <iostream>
 #include <string>
-#include <sstream>
 #include <deque>
-
 using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
-    int t;
-    cin >> t;
+    int T, n;
+    string p, arr;
 
-    while (t--) {
-        string p, x;
-        int n;
-        cin >> p >> n >> x;
+    cin >> T;
+    while (T--) {
+        cin >> p >> n >> arr;
 
         deque<int> dq;
-        
-        x = x.substr(1, x.length() - 2);
-        istringstream ss(x);
-        string temp;
-        while (getline(ss, temp, ',')) {
-            dq.push_back(stoi(temp));
+        bool check = false, isFront = true;
+        string temp = "";
+        for (int i = 1; i < arr.length(); i++) {
+            if (arr[i] == ',' || arr[i] == ']') {
+                if (temp != "") {
+                    dq.push_back(stoi(temp));
+                    temp = "";
+                }
+            }               
+            else
+                temp += arr[i];
         }
 
-        bool front = true, check = false;
-        for (auto f : p) {
-            if (f == 'R') {
-                front = !front;
-            } else {
+        for (auto i : p) {
+            if (i == 'R')
+                isFront = !isFront;
+            else {
                 if (dq.empty()) {
-                    cout << "error\n";
                     check = true;
+                    cout << "error\n";
                     break;
                 }
                 
-                if (front) {
+                if (isFront)
                     dq.pop_front();
-                } else {
+                else
                     dq.pop_back();
-                }
             }
         }
 
         if (!check) {
-            cout << '[';
             int i, len = dq.size();
-            if (front) {
-                for (i = 0; i < len - 1; i++) {
+            
+            cout << '[';
+            if (isFront) {
+                for (i = 0; i < len - 1; i++)
                     cout << dq[i] << ',';
-                }
-            } else {
-                for (i = len - 1; i > 0; i--) {
-                    cout << dq[i] << ',';
-                }
             }
-            if (!dq.empty()) {
+            else {
+                for (i = len - 1; i > 0; i--)
+                    cout << dq[i] << ',';
+            }
+            if (!dq.empty())
                 cout << dq[i];
-            }
-            cout << "]\n";
+            cout << "]\n";  
         }
     }
     
