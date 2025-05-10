@@ -1,27 +1,25 @@
 #include <iostream>
-
 using namespace std;
 
-int dp[10001];
+int DP[10001];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    int n, k, coin;
+
+    int n, k, v;
     cin >> n >> k;
 
-    dp[0] = 1;
-    
+    DP[0] = 1;
     for (int i = 0; i < n; i++) {
-        cin >> coin;
+        cin >> v;
 
-        for (int j = coin; j <= k; j++) {
-            dp[j] += dp[j - coin];
+        for (int j = v; j <= k; j++) {
+            DP[j] += DP[j - v];
         }
     }
 
-    cout << dp[k];
+    cout << DP[k];
     
     return 0;
 }
