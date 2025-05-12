@@ -1,56 +1,53 @@
 #include <iostream>
-
+#include <string>
 using namespace std;
 
 int arr[64][64];
 
-void dfs(int r, int c, int n) {
-    int t = arr[r][c];
-    bool check = true;
+void DFS(int r, int c, int n) {
+    int temp = arr[r][c];
+    bool check = false;
 
     for (int i = r; i < r + n; i++) {
         for (int j = c; j < c + n; j++) {
-            if (arr[i][j] != t) {
-                check = false;
-                cout << "(";
-                
-                n /= 2;
-                dfs(r, c, n);
-                dfs(r, c + n, n);
-                dfs(r + n, c, n);
-                dfs(r + n, c + n, n);
+            if (arr[i][j] != temp) {
+                check = true;
+                cout << '(';
 
-                cout << ")";
+                n /= 2;
+                DFS(r, c, n);
+                DFS(r, c + n, n);
+                DFS(r + n, c, n);
+                DFS(r + n, c + n, n);
+
+                cout << ')';
                 break;
             }
         }
 
-        if (!check) {
+        if (check)
             break;
-        }
     }
-    
-    if (check) {
-        cout << t;
-    }
+
+    if (!check)
+        cout << temp;
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    int n;
-    cin >> n;
 
-    for (int i = 0; i < n; i++) {
-        string s;
+    int N;
+    cin >> N;
+
+    string s;
+    for (int i = 0; i < N; i++) {
         cin >> s;
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < N; j++)
             arr[i][j] = s[j] - '0';
-        }
     }
 
-    dfs(0, 0, n);
+    DFS(0, 0, N);
     
     return 0;
 }
