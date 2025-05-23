@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-
 using namespace std;
 
 int main() {
@@ -9,18 +8,17 @@ int main() {
     
     int t, x, y;
     cin >> t;
-
     while (t--) {
         cin >> x >> y;
 
         double s = sqrt(y - x);
         int r = round(s);
         
-        if (r >= s) {
-            cout << 2 * r - 1 << "\n";
-        } else {
-            cout << 2 * r << "\n";
-        }
+        if (r >= s)
+            cout << 2 * r - 1;
+        else
+            cout << 2 * r;
+        cout << "\n";
     }
     
     return 0;
