@@ -1,14 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-
 using namespace std;
 
-int N, M;
+int N;
 vector<int> v[32001];
 int inDegree[32001];
 
-void Bfs() {
+void BFS() {
     queue<int> q;
     for (int i = 1; i <= N; i++) {
         if (inDegree[i] == 0)
@@ -16,15 +15,15 @@ void Bfs() {
     }
 
     while (!q.empty()) {
-        int c = q.front();
+        int A = q.front();
         q.pop();
-        cout << c << " ";
-        
-        for (int i = 0; i < v[c].size(); i++) {
-            inDegree[v[c][i]]--;
 
-            if (inDegree[v[c][i]] == 0)
-                q.push(v[c][i]);
+        cout << A << " ";
+
+        for (int i = 0; i < v[A].size(); i++) {
+            inDegree[v[A][i]]--;
+            if (inDegree[v[A][i]] == 0)
+                q.push(v[A][i]);
         }
     }
 }
@@ -32,16 +31,16 @@ void Bfs() {
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    int A, B;
+
+    int M, A, B;
     cin >> N >> M;
-    for (int i = 0; i < M; i++) {
+    while (M--) {
         cin >> A >> B;
         v[A].push_back(B);
         inDegree[B]++;
     }
 
-    Bfs();
+    BFS();
     
     return 0;
 }
