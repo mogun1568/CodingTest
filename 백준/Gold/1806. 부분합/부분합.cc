@@ -1,5 +1,4 @@
 #include <iostream>
-#include <queue>
 #include <algorithm>
 
 using namespace std;
@@ -7,7 +6,7 @@ using namespace std;
 #define MAX 100000000
 
 int N, S, answer = MAX;
-queue<int> q;
+int arr[100000];
 
 int main() {
     ios_base::sync_with_stdio(0);
@@ -15,19 +14,15 @@ int main() {
     
     cin >> N >> S;
 
-    int a, sum = 0;
+    int start = 0, sum = 0;
     for (int i = 0; i < N; i++) {
-        cin >> a;
+        cin >> arr[i];
 
-        sum += a;
-        q.push(a);
+        sum += arr[i];
         
         while (sum >= S) {
-            int len = q.size();
-            answer = min(answer, len);
-
-            sum -= q.front();
-            q.pop();
+            answer = min(answer, i - start + 1);
+            sum -= arr[start++];
         }
     }
 
