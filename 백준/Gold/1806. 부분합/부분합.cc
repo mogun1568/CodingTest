@@ -1,35 +1,33 @@
 #include <iostream>
 #include <algorithm>
-
 using namespace std;
+#define MAX 100000
 
-#define MAX 100000000
-
-int N, S, answer = MAX;
-int arr[100000];
+int arr[MAX];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
+    int N, S; 
     cin >> N >> S;
 
-    int start = 0, sum = 0;
+    int start = 0, sum = 0, ans = MAX;
     for (int i = 0; i < N; i++) {
         cin >> arr[i];
 
         sum += arr[i];
-        
+
         while (sum >= S) {
-            answer = min(answer, i - start + 1);
+            ans = min(ans, i - start + 1);
             sum -= arr[start++];
         }
     }
 
-    if (answer == MAX)
-        cout << 0;
+    if (ans == MAX)
+        cout << 0; 
     else
-        cout << answer;
+        cout << ans;
     
     return 0;
 }
