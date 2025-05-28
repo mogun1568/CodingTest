@@ -1,58 +1,52 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
+#define MAX 100001
 
-int k;
-int area[100001];
-bool visited[100001];
+int arr[MAX];
 
-void bfs(int d) {
+int BFS(int n, int k) {
     queue<int> q;
-    q.push(d);
+    arr[n] = 1;
+    q.push(n);
 
     while (!q.empty()) {
-        int cd = q.front();
+        int x = q.front();
         q.pop();
 
-        if (cd == k) {
-            return;
+        if (x == k)
+            break;
+
+        int nx = 2 * x;
+        if (nx < MAX && arr[nx] == 0) {
+            arr[nx] = arr[x];
+            q.push(nx);
         }
 
-        int nd = 2 * cd;
-        if (nd <= 100000 && !visited[nd]) {
-            visited[nd] = true;
-            area[nd] = area[cd];
-            q.push(nd);
+        nx = x - 1;
+        if (nx >= 0 && arr[nx] == 0) {
+            arr[nx] = arr[x] + 1;
+            q.push(nx);
         }
 
-        nd = cd - 1;
-        if (nd >= 0 && !visited[nd]) {
-            visited[nd] = true;
-            area[nd] = area[cd] + 1;
-            q.push(nd);
+        nx = x + 1;
+        if (nx < MAX && arr[nx] == 0) {
+            arr[nx] = arr[x] + 1;
+            q.push(nx);
         }
-
-        nd = cd + 1;
-        if (nd <= 100000 && !visited[nd]) {
-            visited[nd] = true;
-            area[nd] = area[cd] + 1;
-            q.push(nd);
-        }
-
     }
+
+    return arr[k] - 1;
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n >> k;
+    int N, K;
+    cin >> N >> K;
 
-    bfs(n);
-
-    cout << area[k];
-
+    cout << BFS(N, K);
+        
     return 0;
 }
