@@ -1,39 +1,35 @@
 #include <iostream>
-
 using namespace std;
 #define MOD 10007
 
-int dp[1001][10];
+int DP[1001][10];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    int n;
-    cin >> n;
 
-    for (int i = 0; i < 10; i++) {
-        dp[1][i] = 1;
-    }
+    int N;
+    cin >> N;
 
-    for (int i = 2; i <= n; i++) {
+    for (int i = 0; i < 10; i++)
+        DP[1][i] = 1;
+
+    for (int i = 2; i <= N; i++) {
         for (int j = 0; j < 10; j++) {
             if (j == 0) {
-                dp[i][j] = 1;
+                DP[i][j] = 1;
                 continue;
             }
-            
-            dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
-            dp[i][j] %= MOD;
+
+            DP[i][j] = (DP[i][j - 1] + DP[i - 1][j]) % MOD;
         }
     }
 
-    int result = 0;
-    for (int i = 0; i < 10; i++) {
-        result += dp[n][i];
-    }
+    int sum = 0;
+    for (int i = 0; i < 10; i++)
+        sum = (sum + DP[N][i]) % MOD;
 
-    cout << result % MOD;
+    cout << sum;
     
     return 0;
 }
