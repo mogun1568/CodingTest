@@ -1,21 +1,17 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
 
-int N;
-priority_queue<long long, vector<long long>, greater<long long>> pq;
-long long answer;
+priority_queue<int, vector<int>, greater<int>> pq;
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
-    int c, len;
-    long long a;
+    int N, c, a, ans = 0;
     
     cin >> N;
-    for (int i = 0; i < N; i++) {
+    while(N--) {
         cin >> c;
         pq.push(c);
     }
@@ -26,11 +22,11 @@ int main() {
         a += pq.top();
         pq.pop();
 
-        answer += a;
+        ans += a;
         pq.push(a);
     }
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
