@@ -3,13 +3,14 @@
 
 using namespace std;
 
-int N, C, answer;
+
 int house[200000];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     
+    int N, C, ans = 0;
     cin >> N >> C;
     for (int i = 0; i < N; i++) {
         cin >> house[i];
@@ -32,14 +33,14 @@ int main() {
         }
 
         if (cnt >= C) {
-            answer = max(answer, mid);
+            ans = max(ans, mid);
             start = mid + 1;
         }
         else
             end = mid - 1;
     }
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
