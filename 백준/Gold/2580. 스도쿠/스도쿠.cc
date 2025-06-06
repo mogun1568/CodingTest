@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
 int board[9][9];
@@ -33,7 +32,7 @@ bool Check(int r, int c, int value) {
     return true;
 }
 
-void Dfs(int idx) {
+void DFS(int idx) {
     if (success)
         return;
     
@@ -46,10 +45,10 @@ void Dfs(int idx) {
     int r = zero[idx].first;
     int c = zero[idx].second;
 
-    for (int i = 1; i <= 9; i++) {
+    for (int i = 1; i < 10; i++) {
         if (Check(r, c, i)) {
             board[r][c] = i;
-            Dfs(idx + 1);
+            DFS(idx + 1);
             board[r][c] = 0;
         }
     }
@@ -68,7 +67,7 @@ int main() {
         }
     }
 
-    Dfs(0);
+    DFS(0);
     
     return 0;
 }
