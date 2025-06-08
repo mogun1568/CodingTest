@@ -2,10 +2,9 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
-
 using namespace std;
 
-int N, M, X, answer;
+int N, X, ans;
 vector<pair<int, int>> v[2][1001];
 int visited[2][1001];
 
@@ -15,22 +14,22 @@ void Dijkstra(int dir) {
     pq.push({0, X});
 
     while (!pq.empty()) {
-        int ct = pq.top().first;
-        int cv = pq.top().second;
+        int a = pq.top().second;
+        int t = pq.top().first;
         pq.pop();
 
-        if (ct > visited[dir][cv])
+        if (t > visited[dir][a])
             continue;
 
-        for (int i = 0; i < v[dir][cv].size(); i++) {
-            int nt = ct + v[dir][cv][i].second;
-            int nv = v[dir][cv][i].first;
+        for (int i = 0; i < v[dir][a].size(); i++) {
+            int b = v[dir][a][i].first;
+            int nt = t + v[dir][a][i].second;
 
-            if (nt >= visited[dir][nv])
+            if (nt >= visited[dir][b])
                 continue;
 
-            visited[dir][nv] = nt;
-            pq.push({nt, nv});
+            visited[dir][b] = nt;
+            pq.push({nt, b});
         }
     }
 }
@@ -38,10 +37,10 @@ void Dijkstra(int dir) {
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    cin >> N >> M >> X;
 
-    int a, b, t;
+    int M, a, b, t;
+    cin >> N >> M >> X;
+    
     for (int i = 0; i < M; i++) {
         cin >> a >> b >> t;
         v[0][a].push_back({b, t});
@@ -59,10 +58,10 @@ int main() {
     int time;
     for (int i = 1; i <= N; i++) {
         time = visited[0][i] + visited[1][i];
-        answer = max(answer, time);
+        ans = max(ans, time);
     }
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
