@@ -1,34 +1,31 @@
 #include <iostream>
 #include <algorithm>
-
 using namespace std;
+#define MAX 10001
 
-int dp[10001];
+int DP[10001];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n, k, v;
-    cin >> n >> k;
+    int N, K, c;
+    cin >> N >> K;
 
-    for (int i = 1; i <= k; i++) {
-        dp[i] = 10001;
+    for (int i = 1; i <= K; i++)
+        DP[i] = MAX;
+
+    while (N--) {
+        cin >> c;
+
+        for (int i = c; i <= K; i++)
+            DP[i] = min(DP[i], DP[i - c] + 1);
     }
 
-    while (n--) {
-        cin >> v;
-
-        for (int i = v; i <= k; i++) {
-            dp[i] = min(dp[i], dp[i - v] + 1);
-        }
-    }
-
-    if (dp[k] == 10001) {
+    if (DP[K] == MAX)
         cout << -1;
-    } else {
-        cout << dp[k];
-    }
-
+    else
+        cout << DP[K];
+    
     return 0;
 }
