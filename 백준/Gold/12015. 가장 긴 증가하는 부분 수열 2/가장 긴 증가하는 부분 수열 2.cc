@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
-int N;
 vector<int> arr;
 
 int BinarySearch(int a) {
@@ -25,10 +23,10 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
+    int N, a, idx;
     cin >> N;
 
-    int a, idx;
     cin >> a;
     arr.push_back(a);
     
