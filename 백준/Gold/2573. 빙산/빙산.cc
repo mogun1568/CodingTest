@@ -1,39 +1,17 @@
 #include <iostream>
 #include <queue>
-#include <cstring>
 #include <algorithm>
-
+#include <cstring>
 using namespace std;
 
-int N, M, answer;
-int sea[300][300];
+int N, M;
+int iceberg[300][300];
 bool visited[300][300];
-int check;
 
-int dr[4] = {-1, 1, 0, 0};
-int dc[4] = {0, 0, -1, 1};
+int dr[4] = {0, 0, 1, -1};
+int dc[4] = {1, -1, 0, 0};
 
-void Iceberg(int r, int c) {
-    int cnt = 0;
-    
-    for (int i = 0; i < 4; i++) {
-        int nr = r + dr[i];
-        int nc = c + dc[i];
-
-        if (nr < 0 || nr >= N || nc < 0 || nc >= M)
-            continue;
-
-        if (visited[nr][nc] || sea[nr][nc] != 0)
-            continue;
-
-        cnt++;
-    }
-
-    sea[r][c] = max(sea[r][c] - cnt, 0);
-}
-
-void Bfs(int r, int c) {
-    check = 1;
+void BFS(int r, int c) {
     queue<pair<int, int>> q;
     visited[r][c] = true;
     q.push({r, c});
@@ -43,72 +21,65 @@ void Bfs(int r, int c) {
         int cc = q.front().second;
         q.pop();
 
-        Iceberg(cr, cc);
-
+        int zero = 0;
         for (int i = 0; i < 4; i++) {
             int nr = cr + dr[i];
             int nc = cc + dc[i];
 
-            if (nr < 0 || nr >= N || nc < 0 || nc >= M)
+            if (visited[nr][nc])
                 continue;
-
-            if (visited[nr][nc] || sea[nr][nc] == 0)
-                continue;
-
-            visited[nr][nc] = true;
-            q.push({nr, nc});
+            
+            if (iceberg[nr][nc] == 0)
+                zero++;
+            else {
+                visited[nr][nc] = true;
+                q.push({nr, nc});
+            }
         }
+
+        iceberg[cr][cc] = max(0, iceberg[cr][cc] - zero);
     }
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
     cin >> N >> M;
     for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            cin >> sea[i][j];
-        }
+        for (int j = 0; j < M; j++)
+            cin >> iceberg[i][j];
     }
 
-    int cnt = 0;
-    while (true) {
-        check = 0;
-        cnt = 0;
-        memset(visited, false, sizeof(visited));
+    int ans = -1;
+    bool check = false;
+    
+    while (1) {
+        check = false;
         
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (visited[i][j] || sea[i][j] == 0) {
-                    cnt++;
+                if (iceberg[i][j] == 0 || visited[i][j])
                     continue;
-                }     
-    
-                if (check == 1) {
-                    check = 2;
-                    break;
-                }       
-                    
-                Bfs(i, j);
+
+                if (check) {
+                    cout << ans;
+                    return 0;
+                }
+
+                ans++;
+                check = true;
+                BFS(i, j);
             }
-
-            if (check == 2)
-                break;
         }
 
-        if (check == 2)
+        if (!check)
             break;
-        
-        if (cnt == N * M) {
-            answer = 0;
-            break;
-        }
 
-        answer++;
+        memset(visited, false, sizeof(visited));
     }
 
-    cout << answer;
-    
+    cout << 0;
+
     return 0;
 }
