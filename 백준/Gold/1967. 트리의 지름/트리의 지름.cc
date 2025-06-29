@@ -2,16 +2,16 @@
 #include <vector>
 #include <queue>
 #include <cstring>
-
 using namespace std;
 
-int N, farNode, answer;
+int farNode, ans;
 vector<pair<int, int>> tree[10001];
 bool visited[10001];
 
 void Bfs(int a) {
-    answer = 0;
+    ans = 0;
     memset(visited, false, sizeof(visited));
+    
     queue<pair<int, int>> q;
     visited[a] = true;
     q.push({a, 0});
@@ -21,9 +21,9 @@ void Bfs(int a) {
         int cw = q.front().second;
         q.pop();
 
-        if (cw > answer) {
+        if (cw > ans) {
             farNode = ca;
-            answer = cw;
+            ans = cw;
         }
 
         for (int i = 0; i < tree[ca].size(); i++) {
@@ -42,10 +42,9 @@ void Bfs(int a) {
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    cin >> N;
 
-    int a, b, c;
+    int N, a, b, c;
+    cin >> N;
     for (int i = 1; i < N; i++) {
         cin >> a >> b >> c;
         tree[a].push_back({b, c});
@@ -55,7 +54,7 @@ int main() {
     Bfs(1);
     Bfs(farNode);
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
