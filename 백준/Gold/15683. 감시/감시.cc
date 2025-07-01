@@ -1,10 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
-int N, M, answer = 70;
+int N, M, ans = 70;
 int office[9][9];
 vector<pair<int, int>> v;
 
@@ -41,17 +40,16 @@ void Block(int r, int c, int d) {
     }
 }
 
-void Dfs(int idx) {
+void DFS(int idx) {
     if (idx == v.size()) {
-        answer = min(answer, Solve());
+        ans = min(ans, Solve());
         return;
     }
     
     int temp[9][9];
     for (int i = 1; i <= N; i++) {
-        for (int j = 1; j <= M; j++) {
+        for (int j = 1; j <= M; j++)
             temp[i][j] = office[i][j];
-        }
     }
     
     int r = v[idx].first;
@@ -87,12 +85,11 @@ void Dfs(int idx) {
                 break;
         }
         
-        Dfs(idx + 1);
+        DFS(idx + 1);
 
         for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= M; j++) {
+            for (int j = 1; j <= M; j++)
                 office[i][j] = temp[i][j];
-            }
         }
     }
 }
@@ -111,9 +108,9 @@ int main() {
         }
     }
 
-    Dfs(0);
+    DFS(0);
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
