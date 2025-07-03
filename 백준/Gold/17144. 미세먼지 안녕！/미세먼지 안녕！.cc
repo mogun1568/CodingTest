@@ -1,8 +1,7 @@
 #include <iostream>
-
 using namespace std;
 
-int R, C, T, answer;
+int R, C, T, ans;
 int cHouse[51][51];
 int nHouse[51][51];
 int ap[2];
@@ -21,6 +20,7 @@ void Copy() {
 
 void Spread(int r, int c) {
     int amount = cHouse[r][c] / 5;
+    nHouse[r][c] += cHouse[r][c];
     
     for (int i = 0; i < 4; i++) {
         int nr = r + dr[i];
@@ -34,8 +34,7 @@ void Spread(int r, int c) {
 
         nHouse[nr][nc] += amount;
         nHouse[r][c] -= amount;
-    }
-    nHouse[r][c] += cHouse[r][c];
+    }   
 }
 
 void Dust() {
@@ -60,7 +59,6 @@ void Dust() {
 
 void AirPurifierUp() {
     cHouse[ap[0] - 1][1] = 0;
-    
     for (int i = ap[0] - 2; i > 0; i--) {
         if (cHouse[i][1] > 0) {
             cHouse[i + 1][1] = cHouse[i][1];
@@ -89,7 +87,6 @@ void AirPurifierUp() {
 
 void AirPurifierDown() {
     cHouse[ap[1] + 1][1] = 0;
-
     for (int i = ap[0] + 2; i <= R; i++) {
         if (cHouse[i][1] > 0) {
             cHouse[i - 1][1] = cHouse[i][1];
@@ -145,11 +142,11 @@ int main() {
             if (cHouse[i][j] <= 0)
                 continue;
 
-            answer += cHouse[i][j];
+            ans += cHouse[i][j];
         }
     }
 
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
