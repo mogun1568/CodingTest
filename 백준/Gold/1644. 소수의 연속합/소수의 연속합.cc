@@ -1,13 +1,17 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
 
-int N, sum, answer;
 bool prime[4000001];
-queue<int> q;
 
-void Solve() {
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    int N, ans = 0, sum = 0;
+    cin >> N;
+   
+    queue<int> q;
     for (int i = 2; i <= N; i++) {
         if (prime[i])
             continue;
@@ -22,23 +26,13 @@ void Solve() {
         }
 
         if (sum == N)
-            answer++;
+            ans++;
         
-        for (int j = i + i; j <= N; j += i) {
+        for (int j = i + i; j <= N; j += i)
             prime[j] = true;
-        }
     }
-}
 
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    
-    cin >> N;
-
-    Solve();
-
-    cout << answer;
+    cout << ans;
     
     return 0;
 }
