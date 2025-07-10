@@ -4,35 +4,38 @@
 
 using namespace std;
 
-int N, M, answer;
+int N, M;
 vector<pair<int, int>> cpt[1001];
 bool visited[1001];
 
-void Dijkstra() {
+int Dijkstra() {
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
     pq.push({0, 1});
+    int ans = 0;
 
     while (!pq.empty()) {
-        int cc = pq.top().second;
-        int cp = pq.top().first;
+        int a = pq.top().second;
+        int cc = pq.top().first;
         pq.pop();
 
-        if (visited[cc])
+        if (visited[a])
             continue;
         
-        visited[cc] = true;
-        answer += cp;
+        visited[a] = true;
+        ans += cc;
 
-        for (int i = 0; i < cpt[cc].size(); i++) {
-            int nc = cpt[cc][i].first;
-            int np = cpt[cc][i].second;
+        for (int i = 0; i < cpt[a].size(); i++) {
+            int b = cpt[a][i].first;
+            int nc = cpt[a][i].second;
 
-            if (visited[nc])
+            if (visited[b])
                 continue;
 
-            pq.push({np, nc});
+            pq.push({nc, b});
         }
     }
+
+    return ans;
 }
 
 int main() {
@@ -42,15 +45,13 @@ int main() {
     cin >> N >> M;
 
     int a, b, c;
-    for (int i = 0; i < M; i++) {
+    while (M--) {
         cin >> a >> b >> c;
         cpt[a].push_back({b, c});
         cpt[b].push_back({a, c});
     }
 
-    Dijkstra();
-
-    cout << answer;
+    cout << Dijkstra();
     
     return 0;
 }
