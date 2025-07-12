@@ -1,20 +1,16 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
-
-int N;
-priority_queue<int> frontPQ;
-priority_queue<int, vector<int>, greater<int>> backPQ;
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    cin >> N;
 
-    int num;
-    cin >> num;
+    int N, num;
+    priority_queue<int> frontPQ;
+    priority_queue<int, vector<int>, greater<int>> backPQ;
+    
+    cin >> N >> num;
     frontPQ.push(num);
     cout << num << "\n";
     N--;
