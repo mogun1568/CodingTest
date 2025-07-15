@@ -1,48 +1,42 @@
 #include <iostream>
 #include <string>
 #include <stack>
-
 using namespace std;
-
-string S;
-stack<char> st;
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    cin >> S;
 
-    for (int i = 0; i < S.length(); i++) {     
-        if (S[i] == '+' || S[i] == '-') {
+    string str;
+    cin >> str;
+
+    stack<char> st;
+    for (auto s : str) {
+        if (s == '+' || s == '-') {
             while (!st.empty() && st.top() != '(') {
                 cout << st.top();
                 st.pop();
             }
-
-            st.push(S[i]);
+            st.push(s);
         }
-        else if (S[i] == '*' || S[i] == '/') {
+        else if (s == '*' || s == '/') {
             while (!st.empty() && (st.top() == '*' || st.top() == '/')) {
                 cout << st.top();
                 st.pop();
             }
-
-            st.push(S[i]);
+            st.push(s);
         }
-        else if (S[i] == '(') {
-            st.push(S[i]);
-        }
-        else if (S[i] == ')') {
+        else if (s == '(')
+            st.push(s);
+        else if (s == ')') {
             while (st.top() != '(') {
                 cout << st.top();
                 st.pop();
             }
             st.pop();
         }
-        else {
-            cout << S[i];
-        }
+        else
+            cout << s;
     }
 
     while (!st.empty()) {
