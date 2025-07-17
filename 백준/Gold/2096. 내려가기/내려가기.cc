@@ -1,34 +1,31 @@
 #include <iostream>
 #include <algorithm>
-
 using namespace std;
 
-int maxDp[3];
-int minDp[3];
-int temp[3];
+int maxDP[3], minDP[3], temp[3];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int n, a, b, c;
-    cin >> n;
+    int N, a, b, c;
+    cin >> N;
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < N; i++) {
         cin >> a >> b >> c;
 
-        copy(begin(maxDp), end(maxDp), begin(temp));
-        maxDp[0] = a + max(temp[0], temp[1]);
-        maxDp[1] = b + max(temp[0], max(temp[1], temp[2]));
-        maxDp[2] = c + max(temp[1], temp[2]);
+        copy(begin(maxDP), end(maxDP), begin(temp));
+        maxDP[0] = a + max(temp[0], temp[1]);
+        maxDP[1] = b + max(temp[0], max(temp[1], temp[2]));
+        maxDP[2] = c + max(temp[1], temp[2]);
 
-        copy(begin(minDp), end(minDp), begin(temp));
-        minDp[0] = a + min(temp[0], temp[1]);
-        minDp[1] = b + min(temp[0], min(temp[1], temp[2]));
-        minDp[2] = c + min(temp[1], temp[2]);
+        copy(begin(minDP), end(minDP), begin(temp));
+        minDP[0] = a + min(temp[0], temp[1]);
+        minDP[1] = b + min(temp[0], min(temp[1], temp[2]));
+        minDP[2] = c + min(temp[1], temp[2]);
     }
 
-    cout << max(maxDp[0], max(maxDp[1], maxDp[2])) << ' ' << min(minDp[0], min(minDp[1], minDp[2]));
+    cout << max(maxDP[0], max(maxDP[1], maxDP[2])) << ' ' << min(minDP[0], min(minDP[1], minDP[2]));
 
     return 0;
 }
