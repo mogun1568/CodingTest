@@ -1,32 +1,34 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
 
-int f, s, g, u, d;
-int visit[1000001];
+int F, S, G, U, D;
+int visited[1000001];
 
-void bfs() {
+void BFS() {
     queue<int> q;
-    visit[s] = 1;
-    q.push(s);
+    visited[S] = 1;
+    q.push(S);
 
     while (!q.empty()) {
-        int s = q.front();
+        int curF = q.front();
         q.pop();
 
-        if (s == g) {
-            cout << visit[s] - 1;
+        if (curF == G) {
+            cout << visited[curF] - 1;
             return;
         }
 
-        if (s + u <= f && visit[s + u] == 0) {
-            visit[s + u] = visit[s] + 1;
-            q.push(s + u);
+        int nextF = curF + U;
+        if (nextF <= F && visited[nextF] == 0) {
+            visited[nextF] = visited[curF] + 1;
+            q.push(nextF);
         }
-        if (s - d > 0 && visit[s - d] == 0) {
-            visit[s - d] = visit[s] + 1;
-            q.push(s - d);
+
+        nextF = curF - D;
+        if (nextF > 0 && visited[nextF] == 0) {
+            visited[nextF] = visited[curF] + 1;
+            q.push(nextF);
         }
     }
 
@@ -37,9 +39,9 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    cin >> f >> s >> g >> u >> d;
+    cin >> F >> S >> G >> U >> D;
 
-    bfs();
-
+    BFS();
+    
     return 0;
 }
