@@ -1,51 +1,47 @@
 #include <iostream>
-
 using namespace std;
 
-int gcd(int x, int y) {
-    int a = x, b = y, c = 0;
-
-    while (b != 0) {
-        c = a % b;
-        a = b;
-        b = c;
+int GCD(int x, int y) {
+    while (y != 0) {
+        int temp = x % y;
+        x = y;
+        y = temp;
     }
 
-    return x * y / a;
+    return x;
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int t, m, n, x, y;
-    cin >> t;
+    int T;
+    cin >> T;
 
-    while (t--) {
-        cin >> m >> n >> x >> y;
+    while (T--) {
+        int M, N, x, y;
+        cin >> M >> N >> x >> y;
 
-        int maxV = gcd(m, n);
+        int LCM = M / GCD(M, N) * N;
         bool check = false;
 
         while (x != y) {
-            if (x > maxV || y > maxV) {
+            if (x > LCM || y > LCM) {
                 check = true;
                 break;
             }
 
-            if (x < y) {
-                x += m;
-            } else {
-                y += n;
-            }
+            if (x < y)
+                x += M;
+            else
+                y += N;
         }
 
-        if (check) {
+        if (check)
             cout << -1 << "\n";
-        } else {
+        else
             cout << x << "\n";
-        }   
     }
-
+    
     return 0;
 }
