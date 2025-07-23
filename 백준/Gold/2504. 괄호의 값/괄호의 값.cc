@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <stack>
-
 using namespace std;
 
 int main() {
@@ -11,7 +10,7 @@ int main() {
     string s;
     cin >> s;
 
-    int result = 0, sum = 1;
+    int ans = 0, sum = 1;
     stack<char> st;
     for (int i = 0; i < s.length(); i++) {
         if (s[i] == '(') {
@@ -22,12 +21,12 @@ int main() {
             sum *= 3;
         } else if (s[i] == ')') {
             if (st.empty() || st.top() != '(') {
-                result = 0;
+                ans = 0;
                 break;
             }
             if (s[i - 1] == '(') {
                 st.pop();
-                result += sum;
+                ans += sum;
                 sum /= 2;
             } else {
                 st.pop();
@@ -35,12 +34,12 @@ int main() {
             }
         } else {
             if (st.empty() || st.top() != '[') {
-                result = 0;
+                ans = 0;
                 break;
             }
             if (s[i - 1] == '[') {
                 st.pop();
-                result += sum;
+                ans += sum;
                 sum /= 3;
             } else {
                 st.pop();
@@ -49,11 +48,10 @@ int main() {
         }
     }
 
-    if (!st.empty()) {
-        result = 0;
-    }
+    if (!st.empty())
+        ans = 0;
 
-    cout << result;
+    cout << ans;
 
     return 0;
 }
