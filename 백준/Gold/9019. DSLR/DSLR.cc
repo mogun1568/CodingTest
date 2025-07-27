@@ -1,67 +1,64 @@
 #include <iostream>
-#include <queue>
 #include <string>
+#include <queue>
 #include <cstring>
-
 using namespace std;
 
-int T, A, B;
 bool visited[10000];
 
-void DSLR() {
+string BFS(int a, int b) {
     memset(visited, false, sizeof(visited));
     queue<pair<int, string>> q;
-    visited[A] = true;
-    q.push({A, ""});
+    visited[a] = true;
+    q.push({a, ""});
 
     while (!q.empty()) {
-        int a = q.front().first;
+        int c = q.front().first;
         string cmd = q.front().second;
         q.pop();
 
-        if (a == B) {
-            cout << cmd << "\n";
-            return;
-        }
+        if (c == b)
+            return cmd;
 
-        // D
-        int n = (a * 2) % 10000;
-        if (!visited[n]) {  
+        int n = (c * 2) % 10000;
+        if (!visited[n]) {
             visited[n] = true;
             q.push({n, cmd + "D"});
         }
-    
-        // S
-        n = a - 1 < 0 ? 9999 : a - 1;
+
+        n = (c - 1 < 0) ? 9999 : c - 1;
         if (!visited[n]) {
             visited[n] = true;
             q.push({n, cmd + "S"});
         }
-        
-        // L
-        n = (a % 1000) * 10 + (a / 1000);
+
+        n = (c % 1000) * 10 + c / 1000;
         if (!visited[n]) {
             visited[n] = true;
             q.push({n, cmd + "L"});
         }
-        
-        // R
-        n = a / 10 + (a % 10) * 1000;
+
+        n = (c % 10) * 1000 + c / 10;
         if (!visited[n]) {
             visited[n] = true;
             q.push({n, cmd + "R"});
         }
-    }   
+    }
+
+    return "";
 }
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
+    int T;
     cin >> T;
     while (T--) {
+        int A, B;
         cin >> A >> B;
-        DSLR();
+
+        cout << BFS(A, B) << "\n";
     }
     
     return 0;
