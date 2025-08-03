@@ -1,21 +1,18 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-
 using namespace std;
 
-string s1, s2, lcs;
 int dp[1001][1001];
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
+    string s1, s2;
     cin >> s1 >> s2;
 
-    int r = s1.length();
-	int c = s2.length();
-    
+    int r = s1.length(), c = s2.length();
     for (int i = 1; i <= r; i++) {
         for (int j = 1; j <= c; j++) {
             if (s1[i - 1] == s2[j - 1])
@@ -25,26 +22,23 @@ int main() {
         }
     }
 
-    int len = dp[r][c];
-    if (len == 0) {
-        cout << 0;
+    cout << dp[r][c] << "\n";
+    if (dp[r][c] == 0)
         return 0;
-    }
-    else
-        cout << dp[r][c] << "\n";
 
+    string LCS;
 	while (dp[r][c]) {
 		if (dp[r][c] == dp[r - 1][c])
 			r--;
 		else if (dp[r][c] == dp[r][c - 1])
 			c--;
 		else {
-            lcs = s1[r - 1] + lcs;
+            LCS = s1[r - 1] + LCS;
 			r--, c--;
         }
 	}
 
-    cout << lcs;
+    cout << LCS;
     
     return 0;
 }
