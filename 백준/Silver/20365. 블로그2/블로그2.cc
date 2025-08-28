@@ -7,31 +7,20 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int N;
-    cin >> N;
-    
-    int blue = 0, red = 0;
-    char curC, preC;
+    int N, blue = 0, red = 0;
+    string s;
+    cin >> N >> s;
 
-    cin >> preC;
-    N--;
-    
-    while (N--) {
-        cin >> curC;
-
-        if (curC != preC) {
-            if (curC == 'B') {
-                red++;
-                preC = 'B';
-            }
-            else {
+    for (int i = 1; i < N; i++) {
+        if (s[i] != s[i - 1]) {
+            if (s[i - 1] == 'B')
                 blue++;
-                preC = 'R';
-            }
+            else
+                red++;
         }
     }
-
-    if (curC == 'B')
+    
+    if (s[N - 1] == 'B')
         blue++;
     else
         red++;
