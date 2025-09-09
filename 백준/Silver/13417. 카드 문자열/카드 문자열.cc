@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <deque>
 using namespace std;
 
 int main() {
@@ -13,18 +13,20 @@ int main() {
         int N;
         cin >> N;
 
-        string str = "";
+        deque<char> dq;
         while (N--) {
-            char c;
-            cin >> c;
+            char abc;
+            cin >> abc;
 
-            if (c <= str.front())
-                str = c + str;
+            if (abc <= dq.front())
+                dq.push_front(abc);
             else
-                str += c;
+                dq.push_back(abc);
         }
 
-        cout << str << "\n";
+        for (char c : dq)
+            cout << c;
+        cout << "\n";
     }
     
     return 0;
