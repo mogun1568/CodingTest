@@ -1,5 +1,6 @@
 #include <iostream>
-#include <unordered_map>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 int arrA[1000], arrB[1000];
@@ -11,18 +12,17 @@ int main() {
     int T, n, m;
     cin >> T >> n;
 
-    unordered_map<int, int> um;
+    vector<int> sumA, sumB;
     for (int i = 0; i < n; i++) {
         cin >> arrA[i];
 
         int sum = 0;
         for (int j = i; j >= 0; j--) {
             sum += arrA[j];
-            um[sum]++;
+            sumA.push_back(sum);
         }
     }
 
-    long long ans = 0;
     cin >> m;
     for (int i = 0; i < m; i++) {
         cin >> arrB[i];
@@ -30,8 +30,16 @@ int main() {
         int sum = 0;
         for (int j = i; j >= 0; j--) {
             sum += arrB[j];
-            ans += um[T - sum];
+            sumB.push_back(sum);
         }
+    }
+
+    long long ans = 0;
+    sort(sumB.begin(), sumB.end());
+    for (const int& sum : sumA) {
+        auto ub = upper_bound(sumB.begin(), sumB.end(), T - sum);
+		auto lb = lower_bound(sumB.begin(), sumB.end(), T - sum);
+		ans += ub - lb;
     }
 
     cout << ans;
