@@ -3,44 +3,44 @@
 using namespace std;
 
 int S;
-int visited[1002][1002];
+bool visited[1002][1002];
 
 int BFS() {
-    queue<pair<int, int>> q;
-    visited[1][0] = 1;
-    q.push({1, 0});
+    queue<pair<pair<int, int>, int>> q;
+    visited[1][0] = true;
+    q.push({{1, 0}, 0});
 
     while (!q.empty()) {
-        int cs = q.front().first;
-        int clipboard = q.front().second;
+        int cs = q.front().first.first;
+        int clipboard = q.front().first.second;
+        int t = q.front().second;
         q.pop();
-
+        
         if (cs == S)
-            return visited[cs][clipboard] - 1;
+            return t;
 
         // 클립보드에 복사하기
         int ns = cs;
-        if (visited[ns][cs] == 0) {
-            visited[ns][cs] = visited[cs][clipboard] + 1;
-            q.push({ns, cs});
+        if (!visited[ns][cs]) {
+            visited[ns][cs] = true;
+            q.push({{ns, cs}, t + 1});
         }
 
         // 클립보드를 붙여넣기
         if (clipboard > 0) {
             ns = cs + clipboard;
-            if (ns < S + 2 && visited[ns][clipboard] == 0) {
-                visited[ns][clipboard] = visited[cs][clipboard] + 1;
-                q.push({ns, clipboard});
+            if (ns < S + 2 && !visited[ns][clipboard]) {
+                visited[ns][clipboard] = true;
+                q.push({{ns, clipboard}, t + 1});
             }
         }
 
         // 하나 삭제
         ns = cs - 1;
-        if (ns > 0 && visited[ns][clipboard] == 0) {
-            visited[ns][clipboard] = visited[cs][clipboard] + 1;
-            q.push({ns, clipboard});
-        }
-        
+        if (ns > 0 && !visited[ns][clipboard]) {
+            visited[ns][clipboard] = true;
+            q.push({{ns, clipboard}, t + 1});
+        } 
     }
 
     return 0;
