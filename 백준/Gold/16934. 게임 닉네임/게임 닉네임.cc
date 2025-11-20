@@ -35,7 +35,7 @@ struct Trie {
         }
 
         cout << result;
-        if (!isFirst && nickname.find(str) != nickname.end())
+        if (!isFirst && nickname[str] > 0)
             cout << nickname[str] + 1;
         cout << "\n";
         
