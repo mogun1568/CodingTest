@@ -16,6 +16,9 @@ void Dijkstra(int k) {
         int u = pq.top().second;
         int w = pq.top().first;
         pq.pop();
+        
+        if (weight[u] < w)
+            continue;
 
         for (int i = 0; i < edge[u].size(); i++) {
             int v = edge[u][i].first;
