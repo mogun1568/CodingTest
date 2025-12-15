@@ -55,7 +55,11 @@ void solve(int r, int c) {
         if (nr < 0 || nr >= N || nc < 0 || nc >= M)
             continue;
 
-        s.insert(blockNum[nr][nc]);
+        int num = blockNum[nr][nc];
+        if (num == 0)
+            continue;
+
+        s.insert(num);
     }
 
     int cnt = 1;
