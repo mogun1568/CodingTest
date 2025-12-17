@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-const int INF = 50000000;
+const int INF = 1e9;
 
 vector<pair<int, int>> roads[2001];
 int intersection[2001];
