@@ -10,11 +10,10 @@ int main() {
     int N;
     cin >> N;
 
-    vector<pair<int, int>> A;
-    int a;
+    vector<pair<int, int>> A(N);
     for (int i = 0; i < N; i++) {
-        cin >> a;
-        A.push_back({a, i});
+        cin >> A[i].first;
+        A[i].second = i;
     }
 
     sort(A.begin(), A.end());
