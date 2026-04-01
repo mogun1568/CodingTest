@@ -1,31 +1,32 @@
 #include <iostream>
 #include <queue>
-
 using namespace std;
 
-int M, N, ans, cnt;
-int box[1000][1000];
+int M, N, cnt;
+int box[1001][1001];
 queue<pair<int, int>> q;
 
-int dr[4] = {0, 0, -1, 1};
-int dc[4] = {-1, 1, 0, 0};
+int dr[] = {0, 0, -1, 1};
+int dc[] = {-1, 1, 0, 0};
 
-void BFS() {
+int BFS() {
+    int day;
+    
     while (!q.empty()) {
         int r = q.front().first;
         int c = q.front().second;
         q.pop();
 
-        ans = box[r][c] - 1;
         cnt--;
-
+        day = box[r][c] - 1;
+        
         for (int i = 0; i < 4; i++) {
             int nr = r + dr[i];
             int nc = c + dc[i];
 
             if (nr < 0 || nr >= N || nc < 0 || nc >= M)
                 continue;
-            
+
             if (box[nr][nc] != 0)
                 continue;
 
@@ -33,6 +34,11 @@ void BFS() {
             q.push({nr, nc});
         }
     }
+
+    if (cnt == 0)
+        return day;
+    else
+        return -1;
 }
 
 int main() {
@@ -44,19 +50,16 @@ int main() {
         for (int j = 0; j < M; j++) {
             cin >> box[i][j];
 
+            if (box[i][j] == -1)
+                continue;
+            
+            cnt++;  
             if (box[i][j] == 1)
                 q.push({i, j});
-            if (box[i][j] != -1)
-                cnt++;
         }
     }
 
-    BFS();
-
-    if (cnt == 0)
-        cout << ans;
-    else
-        cout << -1;
+    cout << BFS();
     
     return 0;
 }
