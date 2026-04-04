@@ -16,11 +16,11 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    cout << (1 << N) - 1 << "\n";
-    Hanoi(N, 1, 2, 3);
+    cout << (1 << n) - 1 << "\n";
+    Hanoi(n, 1, 2, 3);
     
     return 0;
 }
