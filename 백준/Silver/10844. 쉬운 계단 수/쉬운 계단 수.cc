@@ -1,8 +1,9 @@
 #include <iostream>
 using namespace std;
-#define DIV 1000000000
 
-int DP[101][10];
+int const MOD = 1e9;
+
+int stairs[101][10];
 
 int main() {
     ios_base::sync_with_stdio(0);
@@ -12,24 +13,20 @@ int main() {
     cin >> N;
 
     for (int i = 1; i < 10; i++)
-        DP[1][i] = 1;
+        stairs[1][i] = 1;
 
     for (int i = 2; i <= N; i++) {
-        for (int j = 0; j < 10; j++) {
-            if (j == 0)
-                DP[i][j] = DP[i - 1][1] % DIV;
-            else if (j == 9)
-                DP[i][j] = DP[i - 1][8] % DIV;
-            else
-                DP[i][j] = (DP[i - 1][j - 1] % DIV + DP[i - 1][j + 1] % DIV) % DIV;
-        }
+        stairs[i][0] = stairs[i - 1][1];
+        stairs[i][9] = stairs[i - 1][8];
+        for (int j = 1; j < 9; j++)
+            stairs[i][j] = (stairs[i - 1][j - 1] + stairs[i - 1][j + 1]) % MOD;
     }
 
-    int sum = 0;
+    int ans = 0;
     for (int i = 0; i < 10; i++)
-        sum = (sum + DP[N][i]) % DIV;
+        ans = (ans + stairs[N][i]) % MOD;
 
-    cout << sum;
+    cout << ans;
     
     return 0;
 }
