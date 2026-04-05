@@ -1,29 +1,32 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-#define INF 1000000000;
 
-int N, ansMax = -1000000000, ansMin = 1000000000;
-int arr[11];
-int operation[4];
+int const MAX = 1e9;
 
-void DFS(int idx, int ans) {
-    if (idx == N - 1) {
-        ansMax = max(ansMax, ans);
-        ansMin = min(ansMin, ans);
+int N, maxAns = -MAX, minAns = MAX; 
+int A[101];
+int op[4];
+
+void DFS(int n, int cur) {
+    if (n == N) {
+        minAns = min(minAns, cur);
+        maxAns = max(maxAns, cur);
         return;
     }
 
     for (int i = 0; i < 4; i++) {
-        if (operation[i] == 0)
+        if (op[i] == 0)
             continue;
 
-        operation[i]--;
-        if (i == 0) DFS(idx + 1, ans + arr[idx + 1]);
-        else if (i == 1) DFS(idx + 1, ans - arr[idx + 1]);
-        else if (i == 2) DFS(idx + 1, ans * arr[idx + 1]);
-        else DFS(idx + 1, ans / arr[idx + 1]);
-        operation[i]++;
+        op[i]--;
+
+        if (i == 0) DFS(n + 1, cur + A[n]);
+        else if (i == 1) DFS(n + 1, cur - A[n]);
+        else if (i == 2) DFS(n + 1, cur * A[n]);
+        else if (i == 3) DFS(n + 1, cur / A[n]);
+
+        op[i]++;
     }
 }
 
@@ -33,13 +36,13 @@ int main() {
 
     cin >> N;
     for (int i = 0; i < N; i++)
-        cin >> arr[i];
+        cin >> A[i];
     for (int i = 0; i < 4; i++)
-        cin >> operation[i];
+        cin >> op[i];
 
-    DFS(0, arr[0]);
+    DFS(1, A[0]);
 
-    cout << ansMax << "\n" << ansMin;
+    cout << maxAns << "\n" << minAns;
     
     return 0;
 }
