@@ -1,58 +1,50 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include <cmath>
-
+#include <algorithm>
 using namespace std;
 
-int s[20][20];
+int N, ans = 2e9;
+int stat[21][21];
+bool team[21];
+
+int CompareStat() {
+    int start = 0, link = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (team[i] && team[j])
+                start += stat[i][j];
+            else if (!team[i] && !team[j])
+                link += stat[i][j];
+        }
+    }
+
+    return abs(start - link);
+}
+
+void CreateTeam(int idx, int cnt) {
+    if (cnt == N / 2)
+        ans = min(ans, CompareStat());
+
+    for (int i = idx; i < N; i++) {
+        team[i] = true;
+        CreateTeam(i + 1, cnt + 1);
+        team[i] = false;
+    }
+}
 
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
-    int n;
-    cin >> n;
 
-    vector<int> idx, temp;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> s[i][j];
-        }
-
-        idx.push_back(i);
-        if (i < n / 2) {
-            temp.push_back(1);
-        } else {
-            temp.push_back(0);
-        }
+    cin >> N;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++)
+            cin >> stat[i][j];
     }
 
-    int minDiff = 2000;
-    do {
-        vector<int> si, li;
-        int ts = 0, tl = 0;
-        
-        for (int i = 0; i < n; ++i) {
-            if (temp[i] == 1) {
-                si.push_back(idx[i]);
-            } else {
-                li.push_back(idx[i]);
-            }
-        }
+    CreateTeam(0, 0);
 
-        for (int i = 0; i < n / 2; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                ts += s[si[i]][si[j]];
-                tl += s[li[i]][li[j]];
-            }
-        }
-
-        minDiff = min(minDiff, abs(ts - tl));
-    
-    } while (prev_permutation(temp.begin(), temp.end()));
-
-    cout << minDiff;
+    cout << ans;
     
     return 0;
 }
